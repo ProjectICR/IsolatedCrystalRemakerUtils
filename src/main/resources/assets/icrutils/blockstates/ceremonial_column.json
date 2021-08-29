@@ -1,0 +1,11 @@
+{
+  "forge_marker" : 1,
+  "default" : {
+    "model" : "minecraft:cube_all",
+    "textures" : { "all" : "icrutils:blocks/ceremonial_column"}
+  },
+  "variants" : {
+    "normal" : [{}],
+    "inventory" : [{ "transform" : "forge:default-block"}]
+  }
+}

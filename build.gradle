@@ -1,0 +1,75 @@
+buildscript {
+    repositories {
+        jcenter()
+        maven { url = "https://maven.minecraftforge.net/" }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+    }
+}
+apply plugin: 'net.minecraftforge.gradle.forge'
+
+
+version = "1.0"
+group = "superhelo.icrutils"
+archivesBaseName = "icrutils"
+
+sourceCompatibility = targetCompatibility = '1.8'
+compileJava {
+    sourceCompatibility = targetCompatibility = '1.8'
+}
+
+minecraft {
+    version = "1.12.2-14.23.5.2847"
+    runDir = "run"
+
+    mappings = "stable_39"
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        name = 'blamejared'
+        url = 'https://maven.blamejared.com'
+    }
+    maven {
+        name 'jei'
+        url 'http://dvs1.progwml6.com/files/maven'
+    }
+    maven {
+        name = 'youyihj'
+        url  "https://friendlyhj.github.io/maven"
+    }
+    maven {
+        name = "cofh"
+        url = "https://maven.covers1624.net"
+    }
+    maven {
+        name = "curseforge"
+        url "https://www.cursemaven.com"
+    }
+}
+
+dependencies {
+    deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.20.660"
+    deobfCompile "curse.maven:actually-additions-228404:3117927"
+
+    runtime "mezz.jei:jei_1.12.2:4.16.1.302"
+    runtime "youyihj:zenutils:1.9.4"
+    runtime "cofh:RedstoneFlux:1.12-2.1.0.+:universal"
+}
+
+processResources {
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
+
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+
+        expand 'version':project.version, 'mcversion':project.minecraft.version
+    }
+
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+}

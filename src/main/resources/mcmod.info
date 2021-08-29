@@ -1,0 +1,16 @@
+[
+{
+  "modid": "icrutils",
+  "name": "ICR Utils",
+  "description": "A mod for IsolatedCrystalRemaker modpack",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["superhelo"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
