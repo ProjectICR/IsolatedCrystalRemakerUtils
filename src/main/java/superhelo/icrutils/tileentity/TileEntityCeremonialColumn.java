@@ -3,8 +3,10 @@ package superhelo.icrutils.tileentity;
 
 import crafttweaker.api.item.IItemStack;
 import crafttweaker.api.minecraft.CraftTweakerMC;
+import java.util.Objects;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
@@ -25,6 +27,9 @@ public class TileEntityCeremonialColumn extends TileEntityBase implements Ceremo
 
     @Override
     public void setStackInInv(IItemStack stack) {
+        if(Objects.isNull(stack)) {
+            inv.setStackInSlot(0, ItemStack.EMPTY);
+        }
         inv.setStackInSlot(0, CraftTweakerMC.getItemStack(stack));
     }
 
@@ -44,19 +49,5 @@ public class TileEntityCeremonialColumn extends TileEntityBase implements Ceremo
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         compound.setTag("Inv", this.inv.serializeNBT());
         return super.writeToNBT(compound);
-    }
-
-    @Override
-    public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
-        return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY == capability || super.hasCapability(capability, facing);
-    }
-
-    @Nullable
-    @Override
-    public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
-        if(capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(this.inv);
-        }
-        return super.getCapability(capability, facing);
     }
 }
