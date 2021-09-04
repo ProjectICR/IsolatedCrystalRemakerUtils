@@ -17,7 +17,6 @@ import superhelo.icrutils.api.CeremonialColumnTileInGame;
 public class TileEntityCeremonialColumn extends TileEntityBase implements CeremonialColumnTileInGame {
 
     private final ItemStackHandler inv = new ItemStackHandler(1);
-    private final NBTTagCompound data = new NBTTagCompound();
 
     public TileEntityCeremonialColumn() {
         super("ceremonial_column");
@@ -29,13 +28,13 @@ public class TileEntityCeremonialColumn extends TileEntityBase implements Ceremo
 
     @Override
     public IData getData() {
-        return NBTConverter.from(data, false);
+        return NBTConverter.from(this.getTileData(), false);
     }
 
     @Override
     public void updateData(IData data) {
         if (data instanceof DataMap) {
-            this.data.merge((NBTTagCompound) NBTConverter.from(data));
+            this.getTileData().merge((NBTTagCompound) NBTConverter.from(data));
             this.markDirty();
         } else {
             CraftTweakerAPI.logError("data argument must be DataMap", new IllegalArgumentException());
@@ -65,7 +64,6 @@ public class TileEntityCeremonialColumn extends TileEntityBase implements Ceremo
     @Override
     public void readFromNBT(NBTTagCompound compound) {
         this.inv.deserializeNBT(compound.getCompoundTag("Inv"));
-        this.data.merge(compound.getCompoundTag("CustomData"));
         super.readFromNBT(compound);
     }
 
@@ -73,7 +71,6 @@ public class TileEntityCeremonialColumn extends TileEntityBase implements Ceremo
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         compound.setTag("Inv", this.inv.serializeNBT());
-        compound.setTag("CustomData", data);
         return super.writeToNBT(compound);
     }
 }
