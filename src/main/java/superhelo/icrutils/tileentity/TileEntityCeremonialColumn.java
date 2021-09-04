@@ -3,6 +3,8 @@ package superhelo.icrutils.tileentity;
 
 import crafttweaker.api.item.IItemStack;
 import crafttweaker.api.minecraft.CraftTweakerMC;
+import crafttweaker.api.world.IBlockPos;
+import crafttweaker.api.world.IWorld;
 import java.util.Objects;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -23,6 +25,16 @@ public class TileEntityCeremonialColumn extends TileEntityBase implements Ceremo
 
     public ItemStackHandler getInv() {
         return inv;
+    }
+
+    @Override
+    public IWorld getIWorld() {
+        return CraftTweakerMC.getIWorld(this.getWorld());
+    }
+
+    @Override
+    public IBlockPos getIBlockPos() {
+        return CraftTweakerMC.getIBlockPos(this.getPos());
     }
 
     @Override

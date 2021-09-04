@@ -11,7 +11,7 @@ import superhelo.icrutils.api.CeremonialColumnTileInGame;
 
 @ZenRegister
 @ZenExpansion("crafttweaker.world.IWorld")
-public class IWorldExpand {
+public class IWorldExpansion {
 
     @ZenMethod
     public static CeremonialColumnTileInGame getCCTileInGame(IWorld world, IBlockPos pos) {
