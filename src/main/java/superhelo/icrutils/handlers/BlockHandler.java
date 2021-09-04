@@ -3,7 +3,6 @@ package superhelo.icrutils.handlers;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.block.Block;
-import net.minecraft.tileentity.TileEntity;
 import superhelo.icrutils.blocks.CeremonialColumn;
 
 public class BlockHandler {

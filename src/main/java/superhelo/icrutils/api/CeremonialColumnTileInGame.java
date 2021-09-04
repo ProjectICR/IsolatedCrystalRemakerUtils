@@ -1,6 +1,7 @@
 package superhelo.icrutils.api;
 
 import crafttweaker.annotations.ZenRegister;
+import crafttweaker.api.data.IData;
 import crafttweaker.api.item.IItemStack;
 import crafttweaker.api.world.IBlockPos;
 import crafttweaker.api.world.IWorld;
@@ -25,4 +26,10 @@ public interface CeremonialColumnTileInGame {
 
     @ZenGetter("pos")
     IBlockPos getIBlockPos();
+
+    @ZenGetter("data")
+    IData getData();
+
+    @ZenMethod
+    void updateData(IData data);
 }
