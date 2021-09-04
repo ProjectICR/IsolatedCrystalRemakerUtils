@@ -39,9 +39,6 @@ public class TileEntityCeremonialColumn extends TileEntityBase implements Ceremo
 
     @Override
     public void setStackInInv(IItemStack stack) {
-        if(Objects.isNull(stack)) {
-            inv.setStackInSlot(0, ItemStack.EMPTY);
-        }
         inv.setStackInSlot(0, CraftTweakerMC.getItemStack(stack));
     }
 
