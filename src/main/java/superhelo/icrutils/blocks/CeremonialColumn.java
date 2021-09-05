@@ -10,14 +10,25 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.items.ItemStackHandler;
 import superhelo.icrutils.tileentity.TileEntityCeremonialColumn;
 
+@SuppressWarnings("deprecation")
 public class CeremonialColumn extends BlockBase implements ITileEntityProvider {
+
+    private static final AxisAlignedBB aabb = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 1.5D, 1.0D);
 
     public CeremonialColumn(String registryName) {
         super(Material.ROCK, registryName);
+    }
+
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+        return aabb;
     }
 
     @Nullable
@@ -32,13 +43,14 @@ public class CeremonialColumn extends BlockBase implements ITileEntityProvider {
         if(!worldIn.isRemote) {
             TileEntityCeremonialColumn te = (TileEntityCeremonialColumn) worldIn.getTileEntity(pos);
             if(Objects.nonNull(te)) {
-                ItemStack invStack = te.getInv().getStackInSlot(0);
-                if(!heldItem.isEmpty()) {
-                    if(invStack.isEmpty()) {
+                ItemStackHandler inv = te.getItemStackHandler();
+                ItemStack invStack = inv.getStackInSlot(0);
+                if (!heldItem.isEmpty()) {
+                    if (invStack.isEmpty()) {
                         ItemStack newStack = heldItem.copy();
                         newStack.setCount(1);
-                        te.getInv().setStackInSlot(0, newStack);
-                        if(!playerIn.isCreative()) {
+                        inv.setStackInSlot(0, newStack);
+                        if (!playerIn.isCreative()) {
                             heldItem.shrink(1);
                         }
                         return true;
@@ -46,7 +58,7 @@ public class CeremonialColumn extends BlockBase implements ITileEntityProvider {
 
                 } else if(!invStack.isEmpty()) {
                     playerIn.setHeldItem(hand, invStack.copy());
-                    te.getInv().setStackInSlot(0, ItemStack.EMPTY);
+                    inv.setStackInSlot(0, ItemStack.EMPTY);
                     return true;
                 }
             }

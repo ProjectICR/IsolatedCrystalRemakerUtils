@@ -53,7 +53,9 @@ repositories {
 dependencies {
     deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.20.660"
     deobfCompile "curse.maven:actually-additions-228404:3117927"
+    deobfCompile "vazkii.botania:Botania:r1.10-363.148"
 
+    runtime "curse.maven:Baubles-227083:2518667"
     runtime "mezz.jei:jei_1.12.2:4.16.1.302"
     runtime "youyihj:zenutils:1.9.4"
     runtime "cofh:RedstoneFlux:1.12-2.1.0.+:universal"
