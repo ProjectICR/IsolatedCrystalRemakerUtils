@@ -43,7 +43,7 @@ public class CeremonialColumn extends BlockBase implements ITileEntityProvider {
         if(!worldIn.isRemote) {
             TileEntityCeremonialColumn te = (TileEntityCeremonialColumn) worldIn.getTileEntity(pos);
             if(Objects.nonNull(te)) {
-                ItemStackHandler inv = te.getItemStackHandler();
+                ItemStackHandler inv = te.getInv();
                 ItemStack invStack = inv.getStackInSlot(0);
                 if (!heldItem.isEmpty()) {
                     if (invStack.isEmpty()) {
