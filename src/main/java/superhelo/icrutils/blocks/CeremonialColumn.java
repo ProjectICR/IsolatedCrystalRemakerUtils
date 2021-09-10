@@ -2,6 +2,7 @@ package superhelo.icrutils.blocks;
 
 import java.util.Objects;
 import javax.annotation.Nullable;
+import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -38,11 +39,21 @@ public class CeremonialColumn extends BlockBase implements ITileEntityProvider {
     }
 
     @Override
+    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+        TileEntity tile = worldIn.getTileEntity(pos);
+        if (tile instanceof TileEntityCeremonialColumn) {
+            ItemStackHandler inv = ((TileEntityCeremonialColumn) tile).getInv();
+            Block.spawnAsEntity(worldIn, pos, inv.getStackInSlot(0));
+        }
+        super.breakBlock(worldIn, pos, state);
+    }
+
+    @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         ItemStack heldItem = playerIn.getHeldItem(hand);
-        if(!worldIn.isRemote) {
+        if (!worldIn.isRemote) {
             TileEntityCeremonialColumn te = (TileEntityCeremonialColumn) worldIn.getTileEntity(pos);
-            if(Objects.nonNull(te)) {
+            if (Objects.nonNull(te)) {
                 ItemStackHandler inv = te.getInv();
                 ItemStack invStack = inv.getStackInSlot(0);
                 if (!heldItem.isEmpty()) {
