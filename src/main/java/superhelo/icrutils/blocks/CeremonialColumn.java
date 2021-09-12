@@ -1,7 +1,5 @@
 package superhelo.icrutils.blocks;
 
-import java.util.Objects;
-import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
@@ -17,9 +15,13 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 import superhelo.icrutils.tileentity.TileEntityCeremonialColumn;
+
+import javax.annotation.Nullable;
+import java.util.Objects;
 
 @SuppressWarnings("deprecation")
 public class CeremonialColumn extends BlockBase implements ITileEntityProvider {
@@ -45,7 +47,7 @@ public class CeremonialColumn extends BlockBase implements ITileEntityProvider {
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
         TileEntity tile = worldIn.getTileEntity(pos);
         if (tile instanceof TileEntityCeremonialColumn) {
-            ItemStackHandler inv = ((TileEntityCeremonialColumn) tile).getInv();
+            ItemStackHandler inv = ((TileEntityCeremonialColumn) tile).getInventory();
             Block.spawnAsEntity(worldIn, pos, inv.getStackInSlot(0));
         }
         super.breakBlock(worldIn, pos, state);
@@ -56,14 +58,15 @@ public class CeremonialColumn extends BlockBase implements ITileEntityProvider {
         ItemStack heldItem = playerIn.getHeldItem(hand);
         if (!worldIn.isRemote) {
             TileEntityCeremonialColumn te = (TileEntityCeremonialColumn) worldIn.getTileEntity(pos);
+            worldIn.notifyBlockUpdate(pos, state, worldIn.getBlockState(pos), Constants.BlockFlags.RERENDER_MAIN_THREAD);
             if (Objects.nonNull(te)) {
-                ItemStackHandler inv = te.getInv();
-                ItemStack stack = inv.getStackInSlot(0);
+                ItemStackHandler inventory = te.getInventory();
+                ItemStack stack = inventory.getStackInSlot(0);
                 if (stack.isEmpty()) {
                     if (!heldItem.isEmpty()) {
                         ItemStack newStack = heldItem.copy();
                         newStack.setCount(1);
-                        inv.setStackInSlot(0, newStack);
+                        inventory.setStackInSlot(0, newStack);
                         if (!playerIn.isCreative()) {
                             heldItem.shrink(1);
                         }
@@ -73,7 +76,7 @@ public class CeremonialColumn extends BlockBase implements ITileEntityProvider {
 
                 } else {
                     ItemHandlerHelper.giveItemToPlayer(playerIn, stack.copy());
-                    inv.setStackInSlot(0, ItemStack.EMPTY);
+                    inventory.setStackInSlot(0, ItemStack.EMPTY);
                     return true;
                 }
             }
