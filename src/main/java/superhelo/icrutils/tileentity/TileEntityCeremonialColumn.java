@@ -9,6 +9,8 @@ import crafttweaker.api.minecraft.CraftTweakerMC;
 import crafttweaker.api.world.IBlockPos;
 import crafttweaker.api.world.IWorld;
 import crafttweaker.mc1120.data.NBTConverter;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
@@ -16,9 +18,6 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import superhelo.icrutils.api.CeremonialColumnTileInGame;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 public class TileEntityCeremonialColumn extends TileEntityBase implements CeremonialColumnTileInGame {
 
@@ -63,13 +62,13 @@ public class TileEntityCeremonialColumn extends TileEntityBase implements Ceremo
     }
 
     @Override
-    public void setStackInInv(IItemStack stack) {
-        inventory.setStackInSlot(0, CraftTweakerMC.getItemStack(stack));
+    public IItemStack getStackInInventory() {
+        return CraftTweakerMC.getIItemStack(inventory.getStackInSlot(0));
     }
 
     @Override
-    public IItemStack getStackInInv() {
-        return CraftTweakerMC.getIItemStack(inventory.getStackInSlot(0));
+    public void setStackInInventory(IItemStack stack) {
+        inventory.setStackInSlot(0, CraftTweakerMC.getItemStack(stack));
     }
 
     @Override

@@ -1,5 +1,8 @@
 package superhelo.icrutils.blocks;
 
+import com.blakebr0.cucumber.helper.StackHelper;
+import java.util.Objects;
+import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
@@ -20,13 +23,10 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 import superhelo.icrutils.tileentity.TileEntityCeremonialColumn;
 
-import javax.annotation.Nullable;
-import java.util.Objects;
-
 @SuppressWarnings("deprecation")
 public class CeremonialColumn extends BlockBase implements ITileEntityProvider {
 
-    private static final AxisAlignedBB aabb = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 1.5D, 1.0D);
+    private static final AxisAlignedBB aabb = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 1.35D, 1.0D);
 
     public CeremonialColumn(String registryName) {
         super(Material.ROCK, registryName);
@@ -68,7 +68,7 @@ public class CeremonialColumn extends BlockBase implements ITileEntityProvider {
                         newStack.setCount(1);
                         inventory.setStackInSlot(0, newStack);
                         if (!playerIn.isCreative()) {
-                            heldItem.shrink(1);
+                            playerIn.setHeldItem(hand, StackHelper.decrease(heldItem, 1, false));
                         }
                         worldIn.playSound(null, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 1.0F, 1.0F);
                         return true;

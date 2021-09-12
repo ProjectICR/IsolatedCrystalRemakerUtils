@@ -19,11 +19,11 @@ public class RenderCeremonialColumn extends TileEntitySpecialRenderer<TileEntity
     public void renderTileEntityFast(TileEntityCeremonialColumn tile, double x, double y, double z, float partialTicks, int destroyStage, float alpha, BufferBuilder bufferBuilder) {
         ItemStack stack = tile.getInventory().getStackInSlot(0);
         if (!stack.isEmpty()) {
-            GlStateManager.pushMatrix();
-            GlStateManager.translate(x + 0.5D, y + 1.4D, z + 0.5D);
-            float scale = (stack.getItem() instanceof ItemBlock ? 0.85F : 0.65F);
-            GlStateManager.scale(scale, scale, scale);
             double tick = Minecraft.getSystemTime() / 800.0D;
+            float scale = (stack.getItem() instanceof ItemBlock ? 0.85F : 0.65F);
+            GlStateManager.pushMatrix();
+            GlStateManager.translate(x + 0.5D, y + 1.65D, z + 0.5D);
+            GlStateManager.scale(scale, scale, scale);
             GlStateManager.translate(0.0D, Math.sin(tick % (2 * Math.PI)) * 0.065D, 0.0D);
             GlStateManager.rotate((float) (((tick * 40.0D) % 360)), 0, 1, 0);
             GlStateManager.disableLighting();

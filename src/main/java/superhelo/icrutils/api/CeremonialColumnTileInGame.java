@@ -15,11 +15,11 @@ import stanhebben.zenscript.annotations.ZenSetter;
 public interface CeremonialColumnTileInGame {
 
     @ZenGetter("stack")
-    IItemStack getStackInInv();
+    IItemStack getStackInInventory();
 
     @ZenMethod
     @ZenSetter("stack")
-    void setStackInInv(IItemStack stack);
+    void setStackInInventory(IItemStack stack);
 
     @ZenGetter("world")
     IWorld getIWorld();
