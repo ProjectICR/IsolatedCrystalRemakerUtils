@@ -17,7 +17,7 @@ public class RenderCeremonialColumn extends TileEntitySpecialRenderer<TileEntity
 
     @Override
     public void renderTileEntityFast(TileEntityCeremonialColumn tile, double x, double y, double z, float partialTicks, int destroyStage, float alpha, BufferBuilder bufferBuilder) {
-        ItemStack stack = tile.getInv().getStackInSlot(0);
+        ItemStack stack = tile.getInventory().getStackInSlot(0);
         if (!stack.isEmpty()) {
             GlStateManager.pushMatrix();
             GlStateManager.translate(x + 0.5D, y + 1.4D, z + 0.5D);
