@@ -9,21 +9,27 @@ import crafttweaker.api.minecraft.CraftTweakerMC;
 import crafttweaker.api.world.IBlockPos;
 import crafttweaker.api.world.IWorld;
 import crafttweaker.mc1120.data.NBTConverter;
-import javax.annotation.Nonnull;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import superhelo.icrutils.api.CeremonialColumnTileInGame;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 public class TileEntityCeremonialColumn extends TileEntityBase implements CeremonialColumnTileInGame {
 
-    private final ItemStackHandler inv = new ItemStackHandler(1);
+    private final ItemStackHandler inventory = new ItemStackHandler(1);
 
     public TileEntityCeremonialColumn() {
         super("ceremonial_column");
     }
 
-    public ItemStackHandler getInv() {
-        return inv;
+    public ItemStackHandler getInventory() {
+        return inventory;
     }
 
     @Override
@@ -58,24 +64,39 @@ public class TileEntityCeremonialColumn extends TileEntityBase implements Ceremo
 
     @Override
     public void setStackInInv(IItemStack stack) {
-        inv.setStackInSlot(0, CraftTweakerMC.getItemStack(stack));
+        inventory.setStackInSlot(0, CraftTweakerMC.getItemStack(stack));
     }
 
     @Override
     public IItemStack getStackInInv() {
-        return CraftTweakerMC.getIItemStack(inv.getStackInSlot(0));
+        return CraftTweakerMC.getIItemStack(inventory.getStackInSlot(0));
     }
 
     @Override
     public void readFromNBT(NBTTagCompound compound) {
-        this.inv.deserializeNBT(compound.getCompoundTag("Inv"));
+        this.inventory.deserializeNBT(compound.getCompoundTag("Inventory"));
         super.readFromNBT(compound);
     }
 
     @Nonnull
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-        compound.setTag("Inv", this.inv.serializeNBT());
+        compound.setTag("Inventory", this.inventory.serializeNBT());
         return super.writeToNBT(compound);
+    }
+
+    @Override
+    public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
+        Capability<IItemHandler> itemHandlerCapability = CapabilityItemHandler.ITEM_HANDLER_CAPABILITY;
+        return itemHandlerCapability.equals(capability) || super.hasCapability(capability, facing);
+    }
+
+    @Nullable
+    @Override
+    public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
+        if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+            return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(inventory);
+        }
+        return super.getCapability(capability, facing);
     }
 }
