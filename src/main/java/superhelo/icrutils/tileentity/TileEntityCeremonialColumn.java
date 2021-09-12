@@ -27,6 +27,11 @@ public class TileEntityCeremonialColumn extends TileEntityBase implements Ceremo
     }
 
     @Override
+    public boolean hasFastRenderer() {
+        return true;
+    }
+
+    @Override
     public IData getData() {
         return NBTConverter.from(this.getTileData(), false);
     }

@@ -14,6 +14,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import superhelo.icrutils.handlers.BlockHandler;
 import superhelo.icrutils.handlers.ItemHandler;
 import superhelo.icrutils.tileentity.TileEntityBase;
+import superhelo.icrutils.tileentity.render.RenderInit;
 
 @EventBusSubscriber
 public class Register {
@@ -37,6 +38,7 @@ public class Register {
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
     public static void onModelRegistry(ModelRegistryEvent event) {
+        RenderInit.init();
         for(Item item : ItemHandler.ITEM_REGISTER) {
             registerModelResourceLocation(item);
         }

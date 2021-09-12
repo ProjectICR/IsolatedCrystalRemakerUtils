@@ -7,14 +7,17 @@ import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 import superhelo.icrutils.tileentity.TileEntityCeremonialColumn;
 
@@ -55,20 +58,21 @@ public class CeremonialColumn extends BlockBase implements ITileEntityProvider {
             TileEntityCeremonialColumn te = (TileEntityCeremonialColumn) worldIn.getTileEntity(pos);
             if (Objects.nonNull(te)) {
                 ItemStackHandler inv = te.getInv();
-                ItemStack invStack = inv.getStackInSlot(0);
-                if (!heldItem.isEmpty()) {
-                    if (invStack.isEmpty()) {
+                ItemStack stack = inv.getStackInSlot(0);
+                if (stack.isEmpty()) {
+                    if (!heldItem.isEmpty()) {
                         ItemStack newStack = heldItem.copy();
                         newStack.setCount(1);
                         inv.setStackInSlot(0, newStack);
                         if (!playerIn.isCreative()) {
                             heldItem.shrink(1);
                         }
+                        worldIn.playSound(null, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 1.0F, 1.0F);
                         return true;
                     }
 
-                } else if(!invStack.isEmpty()) {
-                    playerIn.setHeldItem(hand, invStack.copy());
+                } else {
+                    ItemHandlerHelper.giveItemToPlayer(playerIn, stack.copy());
                     inv.setStackInSlot(0, ItemStack.EMPTY);
                     return true;
                 }
