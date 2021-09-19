@@ -74,7 +74,7 @@ public class CeremonialColumn extends BlockBase implements ITileEntityProvider {
                         return true;
                     }
 
-                } else {
+                } else if (heldItem.isEmpty()) {
                     ItemHandlerHelper.giveItemToPlayer(playerIn, stack.copy());
                     inventory.setStackInSlot(0, ItemStack.EMPTY);
                     return true;
