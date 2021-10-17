@@ -17,15 +17,11 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-import superhelo.icrutils.api.CeremonialColumnTileInGame;
+import superhelo.icrutils.crafttweaker.api.ICeremonialColumnTileInGame;
 
-public class TileEntityCeremonialColumn extends TileEntityBase implements CeremonialColumnTileInGame {
+public class TileEntityCeremonialColumn extends TileEntityBase implements ICeremonialColumnTileInGame {
 
     private final ItemStackHandler inventory = new ItemStackHandler(1);
-
-    public TileEntityCeremonialColumn() {
-        super("ceremonial_column");
-    }
 
     public ItemStackHandler getInventory() {
         return inventory;

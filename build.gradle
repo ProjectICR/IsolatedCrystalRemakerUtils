@@ -56,6 +56,7 @@ dependencies {
     deobfCompile "vazkii.botania:Botania:r1.10-363.148"
     deobfCompile "curse.maven:ExtendedCrafting-268387:2777071:"
     deobfCompile "curse.maven:cucumber-272335:2645867"
+    deobfCompile "curse.maven:thaumcraft-223628:2629023"
 
     runtime "curse.maven:Baubles-227083:2518667"
     runtime "mezz.jei:jei_1.12.2:4.16.1.302"

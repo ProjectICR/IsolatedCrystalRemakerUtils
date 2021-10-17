@@ -2,7 +2,6 @@ package superhelo.icrutils;
 
 import javax.annotation.Nonnull;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -22,7 +21,7 @@ public class ICRUtils {
         @Override
         @Nonnull
         public ItemStack createIcon() {
-            return new ItemStack(Item.getItemFromBlock(BlockHandler.CEREMONIALCOLUMN));
+            return new ItemStack(BlockHandler.CEREMONIAL_COLUMN);
         }
     };
 
@@ -35,4 +34,5 @@ public class ICRUtils {
     public void init(FMLInitializationEvent event) {
 
     }
+
 }

@@ -1,2 +1,15 @@
+#Item
+item.icrutils.flux_collector_core.name=Flux Collector Core
+
+#Block
 tile.icrutils.ceremonial_column.name=Ceremonial Column
+
+#Item Group
 itemGroup.icrutils=ICRUtils ItemGroup
+
+#Tooltip
+tooltip.alchemical_brass.info=Alchemical Brass Level
+tooltip.terra_steel.info=TerraSteel Level
+tooltip.osmium.info=Osmium Level
+tooltip.platinum.info=Platinum Level
+tooltip.dragon.info=Dragon Level

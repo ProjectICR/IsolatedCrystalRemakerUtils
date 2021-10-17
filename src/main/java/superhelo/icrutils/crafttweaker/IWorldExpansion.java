@@ -7,15 +7,15 @@ import crafttweaker.api.world.IWorld;
 import net.minecraft.tileentity.TileEntity;
 import stanhebben.zenscript.annotations.ZenExpansion;
 import stanhebben.zenscript.annotations.ZenMethod;
-import superhelo.icrutils.api.CeremonialColumnTileInGame;
+import superhelo.icrutils.crafttweaker.api.ICeremonialColumnTileInGame;
 
 @ZenRegister
 @ZenExpansion("crafttweaker.world.IWorld")
 public class IWorldExpansion {
 
     @ZenMethod
-    public static CeremonialColumnTileInGame getCCTileInGame(IWorld world, IBlockPos pos) {
+    public static ICeremonialColumnTileInGame getCCTileInGame(IWorld world, IBlockPos pos) {
         TileEntity te = CraftTweakerMC.getWorld(world).getTileEntity(CraftTweakerMC.getBlockPos(pos));
-        return te instanceof CeremonialColumnTileInGame ? (CeremonialColumnTileInGame) te : null;
+        return te instanceof ICeremonialColumnTileInGame ? (ICeremonialColumnTileInGame) te : null;
     }
 }

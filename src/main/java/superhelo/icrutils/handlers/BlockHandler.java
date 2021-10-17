@@ -9,6 +9,6 @@ public class BlockHandler {
 
     public static final List<Block> BLOCK_REGISTER = new ArrayList<>();
 
-    public static final Block CEREMONIALCOLUMN = new CeremonialColumn("ceremonial_column");
+    public static final Block CEREMONIAL_COLUMN = new CeremonialColumn();
 
 }

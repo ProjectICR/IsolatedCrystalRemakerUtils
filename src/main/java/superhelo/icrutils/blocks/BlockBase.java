@@ -21,4 +21,5 @@ public class BlockBase extends Block {
         BlockHandler.BLOCK_REGISTER.add(this);
         ItemHandler.ITEM_REGISTER.add(new ItemBlock(this).setRegistryName(registryName));
     }
+
 }

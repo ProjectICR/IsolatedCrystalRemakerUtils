@@ -28,8 +28,8 @@ public class CeremonialColumn extends BlockBase implements ITileEntityProvider {
 
     private static final AxisAlignedBB aabb = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 1.35D, 1.0D);
 
-    public CeremonialColumn(String registryName) {
-        super(Material.ROCK, registryName);
+    public CeremonialColumn() {
+        super(Material.ROCK, "ceremonial_column");
     }
 
     @Override
@@ -46,6 +46,7 @@ public class CeremonialColumn extends BlockBase implements ITileEntityProvider {
     @Override
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
         TileEntity tile = worldIn.getTileEntity(pos);
+
         if (tile instanceof TileEntityCeremonialColumn) {
             ItemStackHandler inv = ((TileEntityCeremonialColumn) tile).getInventory();
             Block.spawnAsEntity(worldIn, pos, inv.getStackInSlot(0));
@@ -71,17 +72,15 @@ public class CeremonialColumn extends BlockBase implements ITileEntityProvider {
                             playerIn.setHeldItem(hand, StackHelper.decrease(heldItem, 1, false));
                         }
                         worldIn.playSound(null, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 1.0F, 1.0F);
-                        return true;
                     }
 
                 } else if (heldItem.isEmpty()) {
                     ItemHandlerHelper.giveItemToPlayer(playerIn, stack.copy());
                     inventory.setStackInSlot(0, ItemStack.EMPTY);
-                    return true;
                 }
             }
-            return false;
         }
         return true;
     }
+
 }

@@ -13,10 +13,12 @@ public class BlockPlace {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onBlockPlace(EntityPlaceEvent event) {
         World world = event.getWorld();
+
         if (!world.isRemote && !event.isCanceled()) {
-            if (world.getBlockState(event.getPos().down()).getBlock() == BlockHandler.CEREMONIALCOLUMN) {
+            if (world.getBlockState(event.getPos().down()).getBlock() == BlockHandler.CEREMONIAL_COLUMN) {
                 event.setCanceled(true);
             }
         }
     }
+
 }
