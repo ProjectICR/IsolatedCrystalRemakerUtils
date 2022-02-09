@@ -1,4 +1,4 @@
-package superhelo.icrutils.crafttweaker.api;
+package superhelo.icrutils.api.crafttweaker;
 
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.data.IData;
@@ -12,7 +12,7 @@ import stanhebben.zenscript.annotations.ZenSetter;
 
 @ZenRegister
 @ZenClass("mods.icrutils.support.CCTileInGame")
-public interface ICeremonialColumnTileInGame {
+public interface ICeremonialColumnTile {
 
     @ZenGetter("stack")
     IItemStack getStackInInventory();
@@ -32,4 +32,5 @@ public interface ICeremonialColumnTileInGame {
 
     @ZenMethod
     void updateData(IData data);
+
 }

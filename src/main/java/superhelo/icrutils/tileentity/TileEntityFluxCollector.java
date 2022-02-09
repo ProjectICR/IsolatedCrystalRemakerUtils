@@ -1,24 +1,43 @@
 package superhelo.icrutils.tileentity;
 
 import javax.annotation.Nullable;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ITickable;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileEntityFluxCollector extends TileEntityBase {
+public class TileEntityFluxCollector extends TileEntityBase implements ITickable {
 
+    private int time;
     private final ItemStackHandler inventory = new ItemStackHandler(1);
 
-    public ItemStackHandler getInventory() {
+    public IItemHandlerModifiable getInventory() {
         return inventory;
     }
 
     @Override
+    public void update() {
+        time++;
+    }
+
+    @Override
+    public void readFromNBT(NBTTagCompound compound) {
+        super.readFromNBT(compound);
+        this.time = compound.getInteger("time");
+    }
+
+    @Override
+    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+        compound.setInteger("time", time);
+        return super.writeToNBT(compound);
+    }
+
+    @Override
     public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
-        Capability<IItemHandler> itemHandlerCapability = CapabilityItemHandler.ITEM_HANDLER_CAPABILITY;
-        return itemHandlerCapability.equals(capability) || super.hasCapability(capability, facing);
+        return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.equals(capability) || super.hasCapability(capability, facing);
     }
 
     @Nullable

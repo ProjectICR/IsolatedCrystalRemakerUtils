@@ -12,4 +12,5 @@ public class ItemBase extends Item {
         this.setTranslationKey(ICRUtils.MODID + "." + registryName);
         ItemHandler.ITEM_REGISTER.add(this);
     }
+
 }

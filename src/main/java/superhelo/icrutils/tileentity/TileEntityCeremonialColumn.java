@@ -1,6 +1,5 @@
 package superhelo.icrutils.tileentity;
 
-
 import crafttweaker.CraftTweakerAPI;
 import crafttweaker.api.data.DataMap;
 import crafttweaker.api.data.IData;
@@ -17,9 +16,9 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-import superhelo.icrutils.crafttweaker.api.ICeremonialColumnTileInGame;
+import superhelo.icrutils.api.crafttweaker.ICeremonialColumnTile;
 
-public class TileEntityCeremonialColumn extends TileEntityBase implements ICeremonialColumnTileInGame {
+public class TileEntityCeremonialColumn extends TileEntityBase implements ICeremonialColumnTile {
 
     private final ItemStackHandler inventory = new ItemStackHandler(1);
 
@@ -94,4 +93,5 @@ public class TileEntityCeremonialColumn extends TileEntityBase implements ICerem
         }
         return super.getCapability(capability, facing);
     }
+
 }

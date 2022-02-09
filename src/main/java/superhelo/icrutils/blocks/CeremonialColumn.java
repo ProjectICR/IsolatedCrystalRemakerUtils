@@ -18,7 +18,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.common.util.Constants.BlockFlags;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 import superhelo.icrutils.tileentity.TileEntityCeremonialColumn;
@@ -51,6 +51,7 @@ public class CeremonialColumn extends BlockBase implements ITileEntityProvider {
             ItemStackHandler inv = ((TileEntityCeremonialColumn) tile).getInventory();
             Block.spawnAsEntity(worldIn, pos, inv.getStackInSlot(0));
         }
+
         super.breakBlock(worldIn, pos, state);
     }
 
@@ -59,7 +60,6 @@ public class CeremonialColumn extends BlockBase implements ITileEntityProvider {
         ItemStack heldItem = playerIn.getHeldItem(hand);
         if (!worldIn.isRemote) {
             TileEntityCeremonialColumn te = (TileEntityCeremonialColumn) worldIn.getTileEntity(pos);
-            worldIn.notifyBlockUpdate(pos, state, worldIn.getBlockState(pos), Constants.BlockFlags.RERENDER_MAIN_THREAD);
             if (Objects.nonNull(te)) {
                 ItemStackHandler inventory = te.getInventory();
                 ItemStack stack = inventory.getStackInSlot(0);
@@ -79,6 +79,7 @@ public class CeremonialColumn extends BlockBase implements ITileEntityProvider {
                     inventory.setStackInSlot(0, ItemStack.EMPTY);
                 }
             }
+            worldIn.notifyBlockUpdate(pos, state, worldIn.getBlockState(pos), BlockFlags.RERENDER_MAIN_THREAD);
         }
         return true;
     }

@@ -1,5 +1,6 @@
 package superhelo.icrutils.items;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import javax.annotation.Nullable;
@@ -12,7 +13,6 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
-import superhelo.icrutils.api.CoreEnum;
 import superhelo.icrutils.api.IFluxCore;
 import superhelo.icrutils.tileentity.TileEntityFluxCollector;
 
@@ -29,6 +29,7 @@ public class FluxCollectorCore extends ItemBase implements IFluxCore {
         if (Objects.nonNull(level)) {
             return CoreEnum.valueOf(level).getAbsorptionRate();
         }
+
         return 0;
     }
 
@@ -39,25 +40,27 @@ public class FluxCollectorCore extends ItemBase implements IFluxCore {
         if (Objects.nonNull(level)) {
             return CoreEnum.valueOf(level).getAbsorptionQuantity();
         }
+
         return 0;
     }
 
     @Override
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
         if (this.isInCreativeTab(tab)) {
-            for (CoreEnum level : CoreEnum.values()) {
+            Arrays.stream(CoreEnum.values()).forEach(level -> {
                 NBTTagCompound nbt = new NBTTagCompound();
                 nbt.setString("level", level.toString());
+
                 ItemStack stack = new ItemStack(this);
                 stack.setTagCompound(nbt);
                 items.add(stack);
-            }
+            });
         }
     }
 
     @Override
     public int getDamage(ItemStack stack) {
-        if (super.getDamage(stack) != 0) {
+        if(super.getDamage(stack) != 0) {
             super.setDamage(stack, 0);
         }
         return 0;
@@ -72,6 +75,7 @@ public class FluxCollectorCore extends ItemBase implements IFluxCore {
         }
     }
 
+    @Nullable
     private String getLevel(World world, BlockPos pos) {
         TileEntity tile = world.getTileEntity(pos);
 
@@ -79,11 +83,37 @@ public class FluxCollectorCore extends ItemBase implements IFluxCore {
             ItemStack stack = ((TileEntityFluxCollector) tile).getInventory().getStackInSlot(0);
             NBTTagCompound nbt = stack.getTagCompound();
 
-            if (stack.hasTagCompound() && nbt.hasKey("level")) {
+            if (Objects.nonNull(nbt) && nbt.hasKey("level")) {
                 return nbt.getString("level");
             }
         }
+
         return null;
+    }
+
+    private enum CoreEnum {
+
+        ALCHEMICAL_BRASS(0, 0),
+        TERRA_STEEL(0, 0),
+        OSMIUM(0, 0),
+        PLATINUM(0, 0),
+        DRAGON(0, 0);
+
+        final int absorptionRate;
+        final int absorptionQuantity;
+
+        CoreEnum(int absorptionRate, int absorptionQuantity) {
+            this.absorptionRate = absorptionRate;
+            this.absorptionQuantity = absorptionQuantity;
+        }
+
+        public int getAbsorptionRate() {
+            return absorptionRate;
+        }
+
+        public int getAbsorptionQuantity() {
+            return absorptionQuantity;
+        }
     }
 
 }

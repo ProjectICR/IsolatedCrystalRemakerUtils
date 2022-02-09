@@ -8,4 +8,5 @@ public class RenderInit {
     public static void init() {
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCeremonialColumn.class, new RenderCeremonialColumn());
     }
+
 }

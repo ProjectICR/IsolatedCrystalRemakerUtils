@@ -36,6 +36,6 @@ public class RenderCeremonialColumn extends TileEntitySpecialRenderer<TileEntity
             GlStateManager.enableLighting();
             GlStateManager.popMatrix();
         }
-
     }
+
 }

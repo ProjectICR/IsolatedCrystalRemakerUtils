@@ -8,4 +8,5 @@ public interface IFluxCore {
     int absorptionRate(World world, BlockPos pos);
 
     int absorptionQuantity(World world, BlockPos pos);
+
 }

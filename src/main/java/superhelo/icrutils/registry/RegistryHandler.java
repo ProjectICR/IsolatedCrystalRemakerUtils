@@ -1,6 +1,7 @@
 package superhelo.icrutils.registry;
 
 import java.util.Objects;
+import javax.annotation.Nonnull;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
@@ -17,21 +18,21 @@ import superhelo.icrutils.tileentity.TileEntityBase;
 import superhelo.icrutils.tileentity.render.RenderInit;
 
 @EventBusSubscriber
-public class Register {
+public class RegistryHandler {
 
-    private static void registerModelResourceLocation(Item item) {
+    private static void registerModelResourceLocation(@Nonnull Item item) {
         ModelLoader.setCustomModelResourceLocation(item, 0,
             new ModelResourceLocation(Objects.requireNonNull(item.getRegistryName()), "inventory"));
     }
 
     @SubscribeEvent
     public static void onBlockRegistry(RegistryEvent.Register<Block> event) {
-        TileEntityBase.init();
         event.getRegistry().registerAll(BlockHandler.BLOCK_REGISTER.toArray(new Block[0]));
+        TileEntityBase.init();
     }
 
     @SubscribeEvent
-    public static void onRegistry(RegistryEvent.Register<Item> event) {
+    public static void onItemRegistry(RegistryEvent.Register<Item> event) {
         event.getRegistry().registerAll(ItemHandler.ITEM_REGISTER.toArray(new Item[0]));
     }
 
@@ -39,8 +40,7 @@ public class Register {
     @SideOnly(Side.CLIENT)
     public static void onModelRegistry(ModelRegistryEvent event) {
         RenderInit.init();
-        for(Item item : ItemHandler.ITEM_REGISTER) {
-            registerModelResourceLocation(item);
-        }
+        ItemHandler.ITEM_REGISTER.forEach(RegistryHandler::registerModelResourceLocation);
     }
+
 }
