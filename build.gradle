@@ -1,14 +1,21 @@
 buildscript {
     repositories {
-        jcenter()
-        maven { url = "https://maven.minecraftforge.net/" }
+        maven {
+            name = "forge"
+            url = "https://maven.minecraftforge.net/"
+        }
+        maven {
+            name = "sponge"
+            url = "https://repo.spongepowered.org/maven"
+        }
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+        classpath 'org.spongepowered:mixingradle:0.6-SNAPSHOT'
     }
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
-
+apply plugin: 'org.spongepowered.mixin'
 
 version = "1.0"
 group = "superhelo.icrutils"
@@ -22,8 +29,17 @@ compileJava {
 minecraft {
     version = "1.12.2-14.23.5.2847"
     runDir = "run"
-
     mappings = "stable_39"
+
+    def args = [
+            "-Dmixin.hotSwap=true",
+            "-Dmixin.checks.interfaces=true"
+    ]
+
+    clientJvmArgs.addAll(args)
+    serverJvmArgs.addAll(args)
+    makeObfSourceJar = false
+
 }
 
 repositories {
@@ -52,21 +68,25 @@ repositories {
 
 dependencies {
 
+
     deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.20.674"
-    deobfCompile "vazkii.botania:Botania:r1.10-363.148"
-    deobfCompile "curse.maven:actually-additions-228404:3117927"
-    deobfCompile "curse.maven:ExtendedCrafting-268387:2777071:"
-    deobfCompile "curse.maven:thaumcraft-223628:2629023"
+    deobfCompile "curse.maven:mixinbooter-419286:3642000"
     deobfCompile "curse.maven:cucumber-272335:2645867"
 
     runtime "curse.maven:Baubles-227083:2518667"
     runtime "mezz.jei:jei_1.12.2:4.16.1.302"
     runtime "youyihj:zenutils:1.10.1"
     runtime "cofh:RedstoneFlux:1.12-2.1.0.+:universal"
-}
 
-runClient {
-    args '--username', 'dev_player'
+    compile("org.spongepowered:mixin:0.8.1-SNAPSHOT") {
+        exclude module: "asm-commons"
+        exclude module: "asm-tree"
+        exclude module: "launchwrapper"
+        exclude module: "guava"
+        exclude module: "log4j-core"
+        exclude module: "gson"
+        exclude module: "commons-io"
+    }
 }
 
 processResources {
@@ -83,3 +103,18 @@ processResources {
         exclude 'mcmod.info'
     }
 }
+
+runClient {
+    args '--username', 'dev_player'
+}
+
+jar {
+    manifest.attributes([
+            "ForceLoadAsMod": true,
+    ])
+}
+/*
+mixin {
+    add sourceSets.main, "mixins.randomtweaker.refmap.json"
+}
+*/

@@ -1,15 +1,5 @@
-#物品
-item.icrutils.flux_collector_core.name=咒波收集器核心
-
-#物品
+#方块
 tile.icrutils.ceremonial_column.name=仪式柱
 
 #物品栏
 itemGroup.icrutils=ICRUtils 物品栏
-
-#提示
-tooltip.alchemical_brass.info=炼金黄铜等级
-tooltip.terra_steel.info=泰拉钢等级
-tooltip.osmium.info=饿等级
-tooltip.platinum.info=铂等级
-tooltip.dragon.info=龙等级

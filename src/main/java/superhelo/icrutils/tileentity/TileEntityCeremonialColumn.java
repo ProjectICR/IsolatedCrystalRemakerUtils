@@ -1,5 +1,6 @@
 package superhelo.icrutils.tileentity;
 
+import com.blakebr0.cucumber.util.VanillaPacketDispatcher;
 import crafttweaker.CraftTweakerAPI;
 import crafttweaker.api.data.DataMap;
 import crafttweaker.api.data.IData;
@@ -10,6 +11,7 @@ import crafttweaker.api.world.IWorld;
 import crafttweaker.mc1120.data.NBTConverter;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.rmi.CORBA.Tie;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
@@ -20,7 +22,12 @@ import superhelo.icrutils.api.crafttweaker.ICeremonialColumnTile;
 
 public class TileEntityCeremonialColumn extends TileEntityBase implements ICeremonialColumnTile {
 
-    private final ItemStackHandler inventory = new ItemStackHandler(1);
+    private final ItemStackHandler inventory = new ItemStackHandler(1) {
+        @Override
+        protected void onContentsChanged(int slot) {
+            TileEntityCeremonialColumn.this.markDirty();
+        }
+    };
 
     public ItemStackHandler getInventory() {
         return inventory;
@@ -44,6 +51,12 @@ public class TileEntityCeremonialColumn extends TileEntityBase implements ICerem
         } else {
             CraftTweakerAPI.logError("data argument must be DataMap", new IllegalArgumentException());
         }
+    }
+
+    @Override
+    public void markDirty() {
+        super.markDirty();
+        VanillaPacketDispatcher.dispatchTEToNearbyPlayers(this);
     }
 
     @Override
