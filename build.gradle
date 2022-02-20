@@ -64,6 +64,10 @@ repositories {
         name = "curseforge"
         url "https://www.cursemaven.com"
     }
+    maven {
+        name = "sponge"
+        url = "https://repo.spongepowered.org/maven"
+    }
 }
 
 dependencies {
@@ -109,12 +113,13 @@ runClient {
 }
 
 jar {
-    manifest.attributes([
-            "ForceLoadAsMod": true,
-    ])
+    manifest {
+        attributes([
+                "ForceLoadAsMod": true,
+        ])
+    }
 }
-/*
+
 mixin {
-    add sourceSets.main, "mixins.randomtweaker.refmap.json"
+    add sourceSets.main, "mixins.icrutils.refmap.json"
 }
-*/
