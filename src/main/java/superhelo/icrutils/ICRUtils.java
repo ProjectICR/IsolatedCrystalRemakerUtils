@@ -9,7 +9,6 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import superhelo.icrutils.handlers.BlockHandler;
-import superhelo.icrutils.handlers.RecipeHandler;
 
 @Mod(modid = ICRUtils.MODID, name = ICRUtils.NAME, version = ICRUtils.VERSION, dependencies = ICRUtils.DESPENDENCIES)
 public class ICRUtils {
@@ -28,7 +27,7 @@ public class ICRUtils {
 
     @EventHandler
     public void init(FMLInitializationEvent event) {
-        RecipeHandler.init();
+
     }
 
 }
