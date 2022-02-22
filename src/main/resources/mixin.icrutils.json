@@ -2,5 +2,6 @@
   "package": "superhelo.icrutils.mixin",
   "minVersion": "0.8",
   "mixins": [
+    "MixinEntityItem"
   ]
 }
