@@ -11,14 +11,13 @@ import crafttweaker.api.world.IWorld;
 import crafttweaker.mc1120.data.NBTConverter;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.rmi.CORBA.Tie;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-import superhelo.icrutils.api.crafttweaker.ICeremonialColumnTile;
+import superhelo.icrutils.crafttweaker.ICeremonialColumnTile;
 
 public class TileEntityCeremonialColumn extends TileEntityBase implements ICeremonialColumnTile {
 

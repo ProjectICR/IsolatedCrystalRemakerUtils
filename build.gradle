@@ -33,7 +33,8 @@ minecraft {
 
     def args = [
             "-Dmixin.hotSwap=true",
-            "-Dmixin.checks.interfaces=true"
+            "-Dmixin.checks.interfaces=true",
+            "-Dmixin.debug.export=true"
     ]
 
     clientJvmArgs.addAll(args)
@@ -46,41 +47,51 @@ repositories {
     mavenCentral()
     maven {
         name = 'blamejared'
-        url = 'https://maven.blamejared.com'
+        url = "https://maven.blamejared.com"
     }
     maven {
-        name 'jei'
-        url 'http://dvs1.progwml6.com/files/maven'
+        name = 'jei'
+        url = "http://dvs1.progwml6.com/files/maven"
     }
     maven {
         name = 'youyihj'
-        url  "https://friendlyhj.github.io/maven"
+        url = "https://friendlyhj.github.io/maven"
     }
     maven {
-        name = "cofh"
+        name = 'cofh'
         url = "https://maven.covers1624.net"
     }
     maven {
-        name = "curseforge"
-        url "https://www.cursemaven.com"
+        name = 'curseforge'
+        url = "https://www.cursemaven.com"
     }
     maven {
-        name = "sponge"
+        name = 'sponge'
         url = "https://repo.spongepowered.org/maven"
+    }
+    maven {
+        name = 'chickenbones'
+        url = "http://chickenbones.net/maven/"
     }
 }
 
 dependencies {
-
-
+    deobfCompile "com.teamacronymcoders.base:base:1.12.2-3.13.0-SNAPSHOT.+"
     deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.20.674"
+    deobfCompile "com.teamacronymcoders:ContentTweaker:1.12.2-4.9.1"
+    deobfCompile "codechicken:CodeChickenLib:1.12.2-+:universal"
+    deobfCompile("morph.avaritia:Avaritia:1.12.2-+:universal") {
+        transitive = false
+    }
+    deobfCompile "curse.maven:AstralSorcery-241721:3044416"
     deobfCompile "curse.maven:mixinbooter-419286:3642000"
     deobfCompile "curse.maven:cucumber-272335:2645867"
+    deobfCompile "curse.maven:ProjectE-226410:2702991"
+    deobfCompile "mezz.jei:jei_1.12.2:4.16.1.302"
+    deobfCompile "youyihj:zenutils:1.10.1"
 
-    runtime "curse.maven:Baubles-227083:2518667"
-    runtime "mezz.jei:jei_1.12.2:4.16.1.302"
-    runtime "youyihj:zenutils:1.10.1"
     runtime "cofh:RedstoneFlux:1.12-2.1.0.+:universal"
+    runtime "curse.maven:Baubles-227083:2518667"
 
     compile("org.spongepowered:mixin:0.8.1-SNAPSHOT") {
         exclude module: "asm-commons"
