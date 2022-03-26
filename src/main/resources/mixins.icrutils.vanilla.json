@@ -1,0 +1,8 @@
+{
+  "package": "superhelo.icrutils.mixins",
+  "minVersion": "0.8",
+  "refmap": "mixins.icrutils.refmap.json",
+  "mixins": [
+    "MixinEntityItem"
+  ]
+}

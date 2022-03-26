@@ -3,3 +3,10 @@ tile.icrutils.ceremonial_column.name=Ceremonial Column
 
 #Item Group
 itemGroup.icrutils=ICRUtils ItemGroup
+
+# Recipe
+icrutils.starlight_fluid_transformation=Starlight Fluid Transformation
+
+# JEI
+icrutils.jei.main_input=Main input of the recipe
+icrutils.jei.main_output=Main output of the recipe

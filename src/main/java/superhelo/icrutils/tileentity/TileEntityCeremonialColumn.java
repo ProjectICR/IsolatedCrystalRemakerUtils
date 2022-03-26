@@ -17,7 +17,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-import superhelo.icrutils.crafttweaker.ICeremonialColumnTile;
+import superhelo.icrutils.integrations.crafttweaker.ICeremonialColumnTile;
 
 public class TileEntityCeremonialColumn extends TileEntityBase implements ICeremonialColumnTile {
 
@@ -45,7 +45,7 @@ public class TileEntityCeremonialColumn extends TileEntityBase implements ICerem
     @Override
     public void updateData(IData data) {
         if (data instanceof DataMap) {
-            this.getTileData().merge((NBTTagCompound) NBTConverter.from(data));
+            this.getTileData().merge(CraftTweakerMC.getNBTCompound(data));
             this.markDirty();
         } else {
             CraftTweakerAPI.logError("data argument must be DataMap", new IllegalArgumentException());

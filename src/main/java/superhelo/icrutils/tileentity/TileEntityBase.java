@@ -7,17 +7,18 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import superhelo.icrutils.ICRUtils;
+import superhelo.icrutils.utils.Utils;
 
 public class TileEntityBase extends TileEntity {
 
     public static void init() {
-        register(TileEntityCeremonialColumn.class, "ceremonial_column");
+        register("ceremonial_column");
     }
 
-    private static void register(Class<? extends TileEntity> clazz, String registryName) {
+    private static void register(String registryName) {
         try {
             ResourceLocation rl = new ResourceLocation(ICRUtils.MODID, registryName);
-            GameRegistry.registerTileEntity(clazz, rl);
+            GameRegistry.registerTileEntity((Class<? extends TileEntity>) Class.forName("superhelo.icrutils.tileentity.TileEntity" + Utils.toUpperCamelCase(registryName)), rl);
         } catch (Exception e) {
             ICRUtils.LOGGER.error("Registering " + registryName + " failed", e);
         }

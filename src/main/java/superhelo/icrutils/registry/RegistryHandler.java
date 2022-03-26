@@ -5,19 +5,23 @@ import javax.annotation.Nonnull;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import superhelo.icrutils.ICRUtils;
 import superhelo.icrutils.handlers.BlockHandler;
 import superhelo.icrutils.handlers.ItemHandler;
 import superhelo.icrutils.tileentity.TileEntityBase;
 import superhelo.icrutils.tileentity.render.RenderInit;
 
-@EventBusSubscriber
+@EventBusSubscriber(modid = ICRUtils.MODID)
 public class RegistryHandler {
 
     private static void registerModelResourceLocation(@Nonnull Item item) {
@@ -33,6 +37,7 @@ public class RegistryHandler {
 
     @SubscribeEvent
     public static void onItemRegistry(RegistryEvent.Register<Item> event) {
+        ICRUtils.BUCKET = getBucket();
         event.getRegistry().registerAll(ItemHandler.ITEM_REGISTER.toArray(new Item[0]));
     }
 
@@ -41,6 +46,16 @@ public class RegistryHandler {
     public static void onModelRegistry(ModelRegistryEvent event) {
         RenderInit.init();
         ItemHandler.ITEM_REGISTER.forEach(RegistryHandler::registerModelResourceLocation);
+    }
+
+    private static ItemStack getBucket() {
+        ItemStack bucket = new ItemStack(ForgeModContainer.getInstance().universalBucket);
+        NBTTagCompound nbt = new NBTTagCompound();
+        nbt.setString("FluidName", "astralsorcery.liquidstarlight");
+        nbt.setInteger("Amount", 1000);
+        bucket.setTagCompound(nbt);
+
+        return bucket;
     }
 
 }

@@ -1,4 +1,4 @@
-package superhelo.icrutils.crafttweaker;
+package superhelo.icrutils.integrations.crafttweaker;
 
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.minecraft.CraftTweakerMC;
