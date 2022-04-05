@@ -9,11 +9,13 @@ buildscript {
             url = "https://repo.spongepowered.org/maven"
         }
     }
+
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
         classpath 'org.spongepowered:mixingradle:0.6-SNAPSHOT'
     }
 }
+
 apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'org.spongepowered.mixin'
 
@@ -41,63 +43,71 @@ minecraft {
     clientJvmArgs.addAll(args)
     serverJvmArgs.addAll(args)
     makeObfSourceJar = false
-
 }
 
 repositories {
     mavenCentral()
     maven {
-        name = 'blamejared'
-        url = 'https://maven.blamejared.com'
+        name 'blamejared'
+        url 'https://maven.blamejared.com'
     }
     maven {
-        name = 'jei'
-        url = 'http://dvs1.progwml6.com/files/maven'
+        name 'jei'
+        url 'http://dvs1.progwml6.com/files/maven'
     }
     maven {
-        name = 'youyihj'
-        url = 'https://friendlyhj.github.io/maven'
+        name 'youyihj'
+        url 'https://friendlyhj.github.io/maven'
     }
     maven {
-        name = 'cofh'
-        url = 'https://maven.covers1624.net'
+        name 'cofh'
+        url 'https://maven.covers1624.net'
     }
     maven {
-        name = 'curseforge'
-        url = 'https://www.cursemaven.com'
+        name 'curseforge'
+        url 'https://www.cursemaven.com'
     }
     maven {
-        name = 'sponge'
-        url = 'https://repo.spongepowered.org/maven'
+        name 'sponge'
+        url 'https://repo.spongepowered.org/maven'
     }
     maven {
-        name = 'chickenbones'
-        url = 'http://chickenbones.net/maven/'
+        name 'chickenbones'
+        url 'http://chickenbones.net/maven/'
     }
     maven {
-        name = 'mixinbooter'
-        url = 'https://maven.cleanroommc.com'
+        name 'mixinbooter'
+        url 'https://maven.cleanroommc.com'
+    }
+    maven {
+        name 'GameStages'
+        url 'https://maven.mcmoddev.com'
     }
 }
 
 dependencies {
-    deobfCompile "com.teamacronymcoders.base:base:1.12.2-3.13.0-SNAPSHOT.+"
-    deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.20.674"
-    deobfCompile "com.teamacronymcoders:ContentTweaker:1.12.2-4.9.1"
+
+    //compile fileTree(dir: 'libs', include: '*.jar')
+
+    //deobfCompile "com.teamacronymcoders.base:base:1.12.2-3.13.0-SNAPSHOT.+"
+    deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.20.+"
+    //deobfCompile "com.teamacronymcoders:ContentTweaker:1.12.2-4.9.1"
+    deobfCompile "net.darkhax.gamestages:GameStages-1.12.2:2.0.90"
     deobfCompile "codechicken:CodeChickenLib:1.12.2-+:universal"
     deobfCompile("morph.avaritia:Avaritia:1.12.2-+:universal") {
         transitive = false
     }
+    deobfCompile "net.darkhax.bookshelf:Bookshelf-1.12.2:+"
     deobfCompile "curse.maven:AstralSorcery-241721:3044416"
+    deobfCompile "curse.maven:ItemStages-280316:2696766"
     deobfCompile "curse.maven:cucumber-272335:2645867"
     deobfCompile "curse.maven:ProjectE-226410:2702991"
     deobfCompile "mezz.jei:jei_1.12.2:4.16.1.302"
     deobfCompile "zone.rong:mixinbooter:4.2"
-    deobfCompile "youyihj:zenutils:1.10.1"
+    //deobfCompile "youyihj:zenutils:1.10.1"
 
     runtime "cofh:RedstoneFlux:1.12-2.1.0.+:universal"
     runtime "curse.maven:Baubles-227083:2518667"
-
 }
 
 processResources {
@@ -120,13 +130,11 @@ runClient {
 }
 
 jar {
-    manifest {
-        attributes([
-                "FMLCorePlugin"              : "superhelo.icrutils.core.MixinEarlyInit",
-                "FMLCorePluginContainsFMLMod": true,
-                "ForceLoadAsMod"             : true
-        ])
-    }
+    manifest.attributes.putAll([
+            "FMLCorePlugin"              : "superhelo.icrutils.core.MixinEarlyInit",
+            "FMLCorePluginContainsFMLMod": true,
+            "ForceLoadAsMod"             : true
+    ])
 }
 
 mixin {

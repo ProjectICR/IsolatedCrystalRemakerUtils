@@ -1,9 +1,9 @@
 package superhelo.icrutils.utils;
 
-import com.google.common.collect.Lists;
 import crafttweaker.api.item.IIngredient;
 import crafttweaker.api.item.IItemStack;
 import crafttweaker.api.minecraft.CraftTweakerMC;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,8 +23,7 @@ public class Utils {
             return str.substring(0, 1).toUpperCase() + str.substring(1);
         }
 
-        String[] camels = str.split("_");
-        for (String camel : camels) {
+        for (String camel : str.split("_")) {
             result.append(camel.substring(0, 1).toUpperCase());
             result.append(camel.substring(1).toLowerCase());
         }
@@ -33,10 +32,6 @@ public class Utils {
 
     public static void spawnEntityItem(World world, BlockPos pos, ItemStack stack) {
         world.spawnEntity(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), stack));
-    }
-
-    public static IItemStack getIItemStack(EntityItem entityItem) {
-        return CraftTweakerMC.getIItemStack(entityItem.getItem());
     }
 
     public static List<ItemStack> getItemStacks(IItemStack... stack) {
@@ -51,9 +46,10 @@ public class Utils {
             .collect(Collectors.toList());
     }
 
-    public static <T> List<T> addAllList(T element, List<T> otherList) {
-        List<T> l = Lists.newArrayList(element);
-        l.addAll(otherList);
+    public static <T> List<T> addAllList(T element, List<T> list) {
+        List<T> l = new ArrayList<>(1 + list.size());
+        l.add(element);
+        l.addAll(list);
         return l;
     }
 

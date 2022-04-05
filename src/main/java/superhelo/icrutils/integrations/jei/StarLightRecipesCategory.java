@@ -24,7 +24,6 @@ public class StarLightRecipesCategory implements IRecipeCategory<StarLightRecipe
     private final IDrawable background;
 
     public StarLightRecipesCategory(IGuiHelper guiHelper) {
-        ResourceLocation rl = new ResourceLocation(ICRUtils.MODID, "textures/gui/jei.png");
         this.background = guiHelper.createBlankDrawable(172, 64);
     }
 
@@ -53,7 +52,6 @@ public class StarLightRecipesCategory implements IRecipeCategory<StarLightRecipe
         minecraft.getTextureManager().bindTexture(new ResourceLocation(ICRUtils.MODID, "textures/gui/arrow.png"));
         Gui.drawModalRectWithCustomSizedTexture(64, 0, 0, 0, 16, 16, 16, 16);
         Gui.drawModalRectWithCustomSizedTexture(97, 0, 0, 0, 16, 16, 16, 16);
-
     }
 
     @Override

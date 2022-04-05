@@ -14,14 +14,14 @@ import net.minecraftforge.fml.common.eventhandler.Cancelable;
 @Cancelable
 public class StarLightRecipeTickEvent extends BaseEvent {
 
+    private final List<EntityItem> entityItemsInSamePos;
+    private int seconds;
     private final String name;
     private final BlockPos pos;
     private final EntityItem input;
-    private final List<EntityItem> entityItemsInSamePos;
-    private int seconds;
-    private ItemStack output;
     private List<ItemStack> additionalOutput;
     private List<IIngredient> additionalInput;
+    private ItemStack output;
 
     public StarLightRecipeTickEvent(String name, EntityItem input, ItemStack output, List<EntityItem> list, BlockPos pos, int seconds, List<IIngredient> additionalInput, List<ItemStack> additionalOutput) {
         this.additionalOutput = additionalOutput.stream().map(ItemStack::copy).collect(Collectors.toList());

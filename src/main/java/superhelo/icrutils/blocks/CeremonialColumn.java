@@ -3,6 +3,7 @@ package superhelo.icrutils.blocks;
 import com.blakebr0.cucumber.helper.StackHelper;
 import java.util.Objects;
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
@@ -23,7 +24,9 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 import superhelo.icrutils.tileentity.TileEntityCeremonialColumn;
 
+@ParametersAreNonnullByDefault
 public class CeremonialColumn extends BlockBase implements ITileEntityProvider {
+
     public static final AxisAlignedBB AABB = new AxisAlignedBB(0.0625D, 0.0D, 0.0625D, 0.9375D, 1.0D, 0.9375D);
 
     public CeremonialColumn() {
@@ -40,6 +43,7 @@ public class CeremonialColumn extends BlockBase implements ITileEntityProvider {
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
         return AABB;
     }
+
     public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
         return FULL_BLOCK_AABB;
     }
