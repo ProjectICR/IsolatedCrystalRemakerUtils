@@ -1,6 +1,5 @@
 package superhelo.icrutils.tileentity;
 
-import com.blakebr0.cucumber.util.VanillaPacketDispatcher;
 import crafttweaker.CraftTweakerAPI;
 import crafttweaker.api.data.DataMap;
 import crafttweaker.api.data.IData;
@@ -18,6 +17,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import superhelo.icrutils.integrations.crafttweaker.ICeremonialColumnTile;
+import superhelo.icrutils.utils.PacketDispatcher;
 
 public class TileEntityCeremonialColumn extends TileEntityBase implements ICeremonialColumnTile {
 
@@ -55,7 +55,7 @@ public class TileEntityCeremonialColumn extends TileEntityBase implements ICerem
     @Override
     public void markDirty() {
         super.markDirty();
-        VanillaPacketDispatcher.dispatchTEToNearbyPlayers(this);
+        PacketDispatcher.dispatchTEToNearbyPlayers(this);
     }
 
     @Override

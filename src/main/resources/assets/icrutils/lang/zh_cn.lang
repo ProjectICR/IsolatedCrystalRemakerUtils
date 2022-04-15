@@ -10,3 +10,6 @@ icrutils.starlight_fluid_transformation=星能液浸泡合成
 # JEI
 icrutils.jei.main_input=配方主要输入物
 icrutils.jei.main_output=配方主要输出物
+
+# 提示
+icrutils.tooltip.stage=这个物品需要%s阶段

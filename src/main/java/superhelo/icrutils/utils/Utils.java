@@ -11,24 +11,8 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import org.apache.commons.lang3.StringUtils;
 
 public class Utils {
-
-    public static String toUpperCamelCase(String str) {
-        StringBuilder result = new StringBuilder();
-        if (StringUtils.isBlank(str)) {
-            return str;
-        } else if (!str.contains("_")) {
-            return str.substring(0, 1).toUpperCase() + str.substring(1);
-        }
-
-        for (String camel : str.split("_")) {
-            result.append(camel.substring(0, 1).toUpperCase());
-            result.append(camel.substring(1).toLowerCase());
-        }
-        return result.toString();
-    }
 
     public static void spawnEntityItem(World world, BlockPos pos, ItemStack stack) {
         world.spawnEntity(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), stack));

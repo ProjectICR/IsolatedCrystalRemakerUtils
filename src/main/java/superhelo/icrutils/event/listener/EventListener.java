@@ -1,4 +1,4 @@
-package superhelo.icrutils.event;
+package superhelo.icrutils.event.listener;
 
 import crafttweaker.api.item.IIngredient;
 import crafttweaker.api.item.IItemStack;
@@ -16,7 +16,7 @@ import superhelo.icrutils.handlers.RecipeHandler;
 import superhelo.icrutils.recipe.StarLightRecipe;
 
 @EventBusSubscriber(modid = ICRUtils.MODID)
-public class EventHandler {
+public class EventListener {
 
     @SubscribeEvent
     public static void onEntityJoinWorld(EntityJoinWorldEvent event) {

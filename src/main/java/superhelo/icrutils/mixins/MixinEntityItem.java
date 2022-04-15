@@ -19,10 +19,10 @@ import superhelo.icrutils.recipe.StarLightRecipe;
 @Mixin(value = EntityItem.class)
 public abstract class MixinEntityItem extends Entity {
 
-    @Shadow(remap = false)
-    public int lifespan;
     @Shadow
     private int age;
+    @Shadow(remap = false)
+    public int lifespan;
 
     public MixinEntityItem(World worldIn) {
         super(worldIn);

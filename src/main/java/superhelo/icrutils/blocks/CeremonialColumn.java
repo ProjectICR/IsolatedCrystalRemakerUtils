@@ -1,6 +1,5 @@
 package superhelo.icrutils.blocks;
 
-import com.blakebr0.cucumber.helper.StackHelper;
 import java.util.Objects;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -86,7 +85,7 @@ public class CeremonialColumn extends BlockBase implements ITileEntityProvider {
                         newStack.setCount(1);
                         inventory.setStackInSlot(0, newStack);
                         if (!playerIn.isCreative()) {
-                            playerIn.setHeldItem(hand, StackHelper.decrease(heldItem, 1, false));
+                            heldItem.shrink(1);
                         }
                         worldIn.playSound(null, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 1.0F, 1.0F);
                     }

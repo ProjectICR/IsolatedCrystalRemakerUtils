@@ -1,4 +1,4 @@
-package superhelo.icrutils.registry;
+package superhelo.icrutils.handlers;
 
 import java.util.Objects;
 import javax.annotation.Nonnull;
@@ -16,8 +16,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import superhelo.icrutils.ICRUtils;
-import superhelo.icrutils.handlers.BlockHandler;
-import superhelo.icrutils.handlers.ItemHandler;
 import superhelo.icrutils.tileentity.TileEntityBase;
 import superhelo.icrutils.tileentity.render.RenderInit;
 
