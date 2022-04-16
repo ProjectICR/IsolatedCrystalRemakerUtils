@@ -35,10 +35,6 @@ public class Utils {
             .collect(Collectors.toList());
     }
 
-    public static <T> Optional<T> getCapability(ICapabilityProvider provider, Capability<T> cap, EnumFacing facing) {
-        return Optional.ofNullable(provider.getCapability(cap, facing));
-    }
-
     public static <T> List<T> addAllList(T element, List<T> list) {
         List<T> l = new ArrayList<>(1 + list.size());
         l.add(element);

@@ -13,7 +13,6 @@ import superhelo.icrutils.cap.IStoreStageData;
 import superhelo.icrutils.network.PacketHandler;
 import superhelo.icrutils.network.PacketStageSync;
 import superhelo.icrutils.network.PacketStageSync.Mode;
-import superhelo.icrutils.utils.Utils;
 
 public class StageUtils {
 
@@ -34,13 +33,15 @@ public class StageUtils {
         modifyStage(player, Collections.EMPTY_SET, Mode.CLEAR, IStoreStageData::clearStage);
     }
 
+    @SuppressWarnings("unchecked")
     public static Set<String> getStagesFromPlayer(EntityPlayer player) {
-        return Objects.requireNonNull(player.getCapability(CapabilityHandler.STORE_STAGE_DATA_CAPABILITY, null)).getStages();
+        return player.hasCapability(CapabilityHandler.STORE_STAGE_DATA, null) ?
+            player.getCapability(CapabilityHandler.STORE_STAGE_DATA, null).getStages() : Collections.EMPTY_SET;
     }
 
     public static boolean hasStage(EntityPlayer player, String stage) {
         if (Objects.nonNull(stage)) {
-            return Objects.requireNonNull(player.getCapability(CapabilityHandler.STORE_STAGE_DATA_CAPABILITY, null)).hasStage(stage);
+            return Objects.requireNonNull(player.getCapability(CapabilityHandler.STORE_STAGE_DATA, null)).hasStage(stage);
         }
 
         return false;
@@ -51,17 +52,15 @@ public class StageUtils {
     }
 
     private static void modifyStage(EntityPlayer player, Set<String> stages, Mode mode, Consumer<IStoreStageData> consumer) {
-        if (stages.stream().anyMatch(Objects::isNull)) {
+        if (stages.stream().anyMatch(Objects::isNull) || !player.hasCapability(CapabilityHandler.STORE_STAGE_DATA, null)) {
             return;
         }
 
-        Utils.getCapability(player, CapabilityHandler.STORE_STAGE_DATA_CAPABILITY, null)
-            .ifPresent(data -> {
-                consumer.accept(data);
-                if (player instanceof EntityPlayerMP) {
-                    PacketHandler.INSTANCE.sendTo(new PacketStageSync(stages, mode), (EntityPlayerMP) player);
-                }
-            });
+        consumer.accept(player.getCapability(CapabilityHandler.STORE_STAGE_DATA, null));
+
+        if (player instanceof EntityPlayerMP) {
+            PacketHandler.INSTANCE.sendTo(new PacketStageSync(stages, mode), (EntityPlayerMP) player);
+        }
     }
 
 }

@@ -12,7 +12,7 @@ import net.minecraftforge.common.capabilities.CapabilityManager;
 public class CapabilityHandler {
 
     @CapabilityInject(IStoreStageData.class)
-    public static Capability<IStoreStageData> STORE_STAGE_DATA_CAPABILITY;
+    public static Capability<IStoreStageData> STORE_STAGE_DATA;
 
     public static void preInit() {
         CapabilityManager.INSTANCE.register(IStoreStageData.class, new IStorage<IStoreStageData>() {

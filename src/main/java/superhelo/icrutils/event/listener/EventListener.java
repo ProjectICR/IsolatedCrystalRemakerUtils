@@ -39,8 +39,8 @@ public class EventListener {
 
     @SubscribeEvent
     public static void onPlayerClone(PlayerEvent.Clone event) {
-        IStoreStageData original = event.getOriginal().getCapability(CapabilityHandler.STORE_STAGE_DATA_CAPABILITY, null);
-        IStoreStageData now = event.getEntityPlayer().getCapability(CapabilityHandler.STORE_STAGE_DATA_CAPABILITY, null);
+        IStoreStageData original = event.getOriginal().getCapability(CapabilityHandler.STORE_STAGE_DATA, null);
+        IStoreStageData now = event.getEntityPlayer().getCapability(CapabilityHandler.STORE_STAGE_DATA, null);
 
         if (Objects.nonNull(original) && Objects.nonNull(now)) {
             now.setStage(original.getStages());
@@ -52,7 +52,7 @@ public class EventListener {
     public static void onPlayerLoggedIn(net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent event) {
         EntityPlayer player = event.player;
 
-        if (player instanceof EntityPlayerMP && !StageUtils.getStagesFromPlayer(player).isEmpty()) {
+        if (player instanceof EntityPlayerMP && player.hasCapability(CapabilityHandler.STORE_STAGE_DATA, null) && !StageUtils.getStagesFromPlayer(player).isEmpty()) {
             PacketHandler.INSTANCE.sendTo(new PacketStageSync(StageUtils.getStagesFromPlayer(player), Mode.SET), (EntityPlayerMP) player);
         }
     }

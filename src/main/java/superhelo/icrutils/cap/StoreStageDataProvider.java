@@ -13,13 +13,13 @@ public class StoreStageDataProvider implements ICapabilitySerializable<NBTTagCom
 
     @Override
     public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
-        return CapabilityHandler.STORE_STAGE_DATA_CAPABILITY.equals(capability);
+        return CapabilityHandler.STORE_STAGE_DATA.equals(capability);
     }
 
     @Nullable
     @Override
     public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
-        return CapabilityHandler.STORE_STAGE_DATA_CAPABILITY.equals(capability) ? CapabilityHandler.STORE_STAGE_DATA_CAPABILITY.cast(data) : null;
+        return CapabilityHandler.STORE_STAGE_DATA.equals(capability) ? CapabilityHandler.STORE_STAGE_DATA.cast(data) : null;
     }
 
     @Override
