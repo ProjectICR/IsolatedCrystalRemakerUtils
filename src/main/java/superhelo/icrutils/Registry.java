@@ -1,4 +1,4 @@
-package superhelo.icrutils.handlers;
+package superhelo.icrutils;
 
 import java.util.Objects;
 import javax.annotation.Nonnull;
@@ -15,12 +15,13 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import superhelo.icrutils.ICRUtils;
+import superhelo.icrutils.blocks.BlockHandler;
+import superhelo.icrutils.items.ItemHandler;
 import superhelo.icrutils.tileentity.TileEntityBase;
 import superhelo.icrutils.tileentity.render.RenderInit;
 
 @EventBusSubscriber(modid = ICRUtils.MODID)
-public class RegistryHandler {
+public class Registry {
 
     private static void registerModelResourceLocation(@Nonnull Item item) {
         ModelLoader.setCustomModelResourceLocation(item, 0,
@@ -43,7 +44,7 @@ public class RegistryHandler {
     @SideOnly(Side.CLIENT)
     public static void onModelRegistry(ModelRegistryEvent event) {
         RenderInit.init();
-        ItemHandler.ITEM_REGISTER.forEach(RegistryHandler::registerModelResourceLocation);
+        ItemHandler.ITEM_REGISTER.forEach(Registry::registerModelResourceLocation);
     }
 
     private static ItemStack getBucket() {

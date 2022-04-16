@@ -1,4 +1,4 @@
-package superhelo.icrutils.utils;
+package superhelo.icrutils.network;
 
 import java.util.Objects;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -7,8 +7,18 @@ import net.minecraft.server.management.PlayerChunkMapEntry;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import net.minecraftforge.fml.relauncher.Side;
+import superhelo.icrutils.ICRUtils;
 
-public class PacketDispatcher {
+public class PacketHandler {
+
+    public static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(ICRUtils.MODID);
+
+    public static void preInit() {
+        INSTANCE.registerMessage(PacketStageSync.Handler.class, PacketStageSync.class, 0, Side.CLIENT);
+    }
 
     public static void dispatchTEToNearbyPlayers(TileEntity tile) {
         World world = tile.getWorld();

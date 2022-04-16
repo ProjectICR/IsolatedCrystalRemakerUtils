@@ -1,4 +1,4 @@
-package superhelo.icrutils.integrations.crafttweaker;
+package superhelo.icrutils.integrations.crafttweaker.action;
 
 import crafttweaker.CraftTweakerAPI;
 import crafttweaker.IAction;
@@ -13,6 +13,7 @@ import net.minecraft.item.ItemStack;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 import superhelo.icrutils.recipe.StarLightRecipe;
+import superhelo.icrutils.recipe.StarLightUtils;
 import superhelo.icrutils.utils.Utils;
 
 @ZenRegister
@@ -59,7 +60,7 @@ public class CTStarLightRecipe {
 
         @Override
         public boolean validate() {
-            return !StarLightRecipe.haveRecipeForName(name);
+            return !StarLightUtils.haveRecipeForName(name);
         }
 
         @Override

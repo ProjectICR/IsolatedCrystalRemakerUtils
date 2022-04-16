@@ -12,4 +12,4 @@ icrutils.jei.main_input=Main input of the recipe
 icrutils.jei.main_output=Main output of the recipe
 
 # Tooltip
-icrutils.tooltip.stage=The ItemStack need %s stage
+icrutils.tooltip.stage=The ItemStack requires %s stage to be taken out of transmutation table

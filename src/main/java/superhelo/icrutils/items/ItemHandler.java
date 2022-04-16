@@ -1,4 +1,4 @@
-package superhelo.icrutils.handlers;
+package superhelo.icrutils.items;
 
 import com.google.common.collect.Lists;
 import java.util.List;

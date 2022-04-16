@@ -1,4 +1,4 @@
-package superhelo.icrutils.integrations.crafttweaker;
+package superhelo.icrutils.integrations.crafttweaker.expend;
 
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.minecraft.CraftTweakerMC;
@@ -8,6 +8,7 @@ import javax.annotation.Nullable;
 import net.minecraft.tileentity.TileEntity;
 import stanhebben.zenscript.annotations.ZenExpansion;
 import stanhebben.zenscript.annotations.ZenMethod;
+import superhelo.icrutils.integrations.crafttweaker.ICeremonialColumnTile;
 
 @ZenRegister
 @ZenExpansion("crafttweaker.world.IWorld")

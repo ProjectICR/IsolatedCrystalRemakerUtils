@@ -14,8 +14,8 @@ import net.minecraftforge.fml.common.eventhandler.Cancelable;
 @Cancelable
 public class StarLightRecipeTickEvent extends BaseEvent {
 
-    private final List<EntityItem> entityItemsInSamePos;
     private int seconds;
+    private final List<EntityItem> entityItemsInSamePos;
     private final String name;
     private final BlockPos pos;
     private final EntityItem input;

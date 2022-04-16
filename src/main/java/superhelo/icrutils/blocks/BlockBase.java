@@ -5,8 +5,7 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemBlock;
 import superhelo.icrutils.ICRUtils;
-import superhelo.icrutils.handlers.BlockHandler;
-import superhelo.icrutils.handlers.ItemHandler;
+import superhelo.icrutils.items.ItemHandler;
 
 public class BlockBase extends Block {
 

@@ -10,23 +10,22 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import superhelo.icrutils.handlers.StageHandler;
-import superhelo.icrutils.utils.StageUtils;
+import superhelo.icrutils.stage.StageUtils;
 
 @Mixin(value = TransmutationInventory.class, remap = false)
 public abstract class MixinTransmutationInventory {
 
     @Final
     @Shadow
-    public IItemHandlerModifiable outputs;
+    public EntityPlayer player;
 
     @Final
     @Shadow
-    public EntityPlayer player;
+    public IItemHandlerModifiable outputs;
 
     @Inject(method = "writeIntoOutputSlot", at = @At(value = "HEAD"), cancellable = true)
     private void injectWriteIntoOutputSlot(int slot, ItemStack stack, CallbackInfo ci) {
-        if (StageHandler.hasStage(stack) && !StageUtils.hasStage(this.player, stack)) {
+        if (!StageUtils.hasStage(this.player, stack)) {
             this.outputs.setStackInSlot(slot, ItemStack.EMPTY);
             ci.cancel();
         }

@@ -9,6 +9,7 @@ import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.MCVersion;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.Name;
 import org.apache.logging.log4j.LogManager;
+import superhelo.icrutils.ICRUtils;
 import zone.rong.mixinbooter.IEarlyMixinLoader;
 
 @Name("ICRUtils Core")
@@ -17,7 +18,7 @@ public class MixinEarlyInit implements IEarlyMixinLoader, IFMLLoadingPlugin {
 
     @Override
     public List<String> getMixinConfigs() {
-        LogManager.getLogger("ICRUtils Mixins").info("Init Vanilla Mixins");
+        LogManager.getLogger(ICRUtils.NAME + "Mixins").info("Init Vanilla Mixins");
         return Lists.newArrayList("mixins.icrutils.vanilla.json");
     }
 
@@ -39,7 +40,6 @@ public class MixinEarlyInit implements IEarlyMixinLoader, IFMLLoadingPlugin {
 
     @Override
     public void injectData(Map<String, Object> data) {
-
     }
 
     @Override

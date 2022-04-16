@@ -2,7 +2,6 @@ package superhelo.icrutils.items;
 
 import net.minecraft.item.Item;
 import superhelo.icrutils.ICRUtils;
-import superhelo.icrutils.handlers.ItemHandler;
 
 public class ItemBase extends Item {
 

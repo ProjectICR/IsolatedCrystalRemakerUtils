@@ -16,7 +16,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.apache.commons.lang3.mutable.MutableInt;
 import superhelo.icrutils.event.StarLightRecipeTickEvent;
-import superhelo.icrutils.handlers.RecipeHandler;
 import superhelo.icrutils.utils.Utils;
 
 public class StarLightRecipe implements Predicate<EntityItem> {
@@ -29,6 +28,8 @@ public class StarLightRecipe implements Predicate<EntityItem> {
     private final List<ItemStack> additionalOutput;
     private final List<IIngredient> additionalInput;
 
+    public static final Map<String, StarLightRecipe> STAR_LIGHT_RECIPE_MAP = Maps.newHashMap();
+
     public StarLightRecipe(String name, ItemStack output, IIngredient input, int seconds, List<ItemStack> additionalOutput, List<IIngredient> additionalInput) {
         this.name = name;
         this.input = input;
@@ -36,31 +37,7 @@ public class StarLightRecipe implements Predicate<EntityItem> {
         this.seconds = seconds;
         this.additionalInput = additionalInput;
         this.additionalOutput = additionalOutput;
-        RecipeHandler.STAR_LIGHT_RECIPE_MAP.put(name, this);
-    }
-
-    public static boolean haveRecipeForName(String name) {
-        return RecipeHandler.STAR_LIGHT_RECIPE_MAP.containsKey(name);
-    }
-
-    public static boolean haveRecipeForInput(ItemStack input) {
-        return RecipeHandler.STAR_LIGHT_RECIPE_MAP.values().stream().anyMatch(recipeIn -> recipeIn.input.matches(CraftTweakerMC.getIItemStack(input)));
-    }
-
-    public static boolean haveRecipeForOutput(ItemStack output) {
-        return RecipeHandler.STAR_LIGHT_RECIPE_MAP.values().stream().anyMatch(recipeIn -> ItemStack.areItemStacksEqual(recipeIn.output, output));
-    }
-
-    public static StarLightRecipe getRecipeByName(String name) {
-        return RecipeHandler.STAR_LIGHT_RECIPE_MAP.get(name);
-    }
-
-    public static StarLightRecipe getRecipeByInput(ItemStack input) {
-        return RecipeHandler.STAR_LIGHT_RECIPE_MAP.values().stream().filter(recipeIn -> recipeIn.input.matches(CraftTweakerMC.getIItemStack(input))).findFirst().orElse(null);
-    }
-
-    public static StarLightRecipe getRecipeByOutput(ItemStack output) {
-        return RecipeHandler.STAR_LIGHT_RECIPE_MAP.values().stream().filter(recipeIn -> ItemStack.areItemStacksEqual(recipeIn.output, output)).findFirst().orElse(null);
+        STAR_LIGHT_RECIPE_MAP.put(name, this);
     }
 
     public String getName() {

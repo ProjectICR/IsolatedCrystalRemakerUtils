@@ -14,10 +14,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import superhelo.icrutils.integrations.crafttweaker.ICeremonialColumnTile;
-import superhelo.icrutils.utils.PacketDispatcher;
+import superhelo.icrutils.network.PacketHandler;
 
 public class TileEntityCeremonialColumn extends TileEntityBase implements ICeremonialColumnTile {
 
@@ -55,7 +54,7 @@ public class TileEntityCeremonialColumn extends TileEntityBase implements ICerem
     @Override
     public void markDirty() {
         super.markDirty();
-        PacketDispatcher.dispatchTEToNearbyPlayers(this);
+        PacketHandler.dispatchTEToNearbyPlayers(this);
     }
 
     @Override
@@ -92,14 +91,13 @@ public class TileEntityCeremonialColumn extends TileEntityBase implements ICerem
     }
 
     @Override
-    public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
-        Capability<IItemHandler> itemHandlerCapability = CapabilityItemHandler.ITEM_HANDLER_CAPABILITY;
-        return itemHandlerCapability.equals(capability) || super.hasCapability(capability, facing);
+    public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
+        return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.equals(capability) || super.hasCapability(capability, facing);
     }
 
     @Nullable
     @Override
-    public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
+    public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
         if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
             return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(inventory);
         }

@@ -15,6 +15,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import superhelo.icrutils.recipe.StarLightRecipe;
+import superhelo.icrutils.recipe.StarLightUtils;
 
 @Mixin(value = EntityItem.class)
 public abstract class MixinEntityItem extends Entity {
@@ -50,7 +51,7 @@ public abstract class MixinEntityItem extends Entity {
 
         IBlockState state = world.getBlockState(new BlockPos(this));
         if (!this.world.isRemote && this.getEntityData().getBoolean("starLightInput") && state.getBlock() instanceof FluidBlockLiquidStarlight && state.getValue(BlockFluidBase.LEVEL) == 0) {
-            StarLightRecipe recipe = StarLightRecipe.getRecipeByInput(item);
+            StarLightRecipe recipe = StarLightUtils.getRecipeByInput(item);
             if (Objects.nonNull(recipe)) {
                 recipe.test((EntityItem) (Object) this);
             }
