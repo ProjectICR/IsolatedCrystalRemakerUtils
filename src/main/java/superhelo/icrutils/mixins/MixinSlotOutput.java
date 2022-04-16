@@ -15,7 +15,6 @@ public abstract class MixinSlotOutput extends SlotItemHandler {
 
     public MixinSlotOutput(IItemHandler itemHandler, int index, int xPosition, int yPosition) {
         super(itemHandler, index, xPosition, yPosition);
-        throw new AssertionError("Cannot happen");
     }
 
     @Inject(method = "canTakeStack", at = @At(value = "HEAD"), cancellable = true)

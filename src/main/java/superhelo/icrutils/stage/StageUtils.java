@@ -14,6 +14,7 @@ import superhelo.icrutils.network.PacketHandler;
 import superhelo.icrutils.network.PacketStageSync;
 import superhelo.icrutils.network.PacketStageSync.Mode;
 
+@SuppressWarnings("unchecked")
 public class StageUtils {
 
     public static void addStageToPlayer(EntityPlayer player, String stage) {
@@ -28,23 +29,21 @@ public class StageUtils {
         modifyStage(player, stages, Mode.SET, data -> data.setStage(stages));
     }
 
-    @SuppressWarnings("unchecked")
     public static void clearStagesFromPlayer(EntityPlayer player) {
         modifyStage(player, Collections.EMPTY_SET, Mode.CLEAR, IStoreStageData::clearStage);
     }
 
-    @SuppressWarnings("unchecked")
     public static Set<String> getStagesFromPlayer(EntityPlayer player) {
         return player.hasCapability(CapabilityHandler.STORE_STAGE_DATA, null) ?
             player.getCapability(CapabilityHandler.STORE_STAGE_DATA, null).getStages() : Collections.EMPTY_SET;
     }
 
     public static boolean hasStage(EntityPlayer player, String stage) {
-        if (Objects.nonNull(stage)) {
-            return Objects.requireNonNull(player.getCapability(CapabilityHandler.STORE_STAGE_DATA, null)).hasStage(stage);
+        if (Objects.nonNull(stage) && player.hasCapability(CapabilityHandler.STORE_STAGE_DATA, null)) {
+            return player.getCapability(CapabilityHandler.STORE_STAGE_DATA, null).hasStage(stage);
         }
 
-        return false;
+        return true;
     }
 
     public static boolean hasStage(EntityPlayer player, ItemStack stack) {
