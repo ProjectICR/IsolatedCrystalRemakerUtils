@@ -1,4 +1,4 @@
-package superhelo.icrutils.cap;
+package superhelo.icrutils.capability;
 
 import com.google.common.collect.Sets;
 import java.util.Set;

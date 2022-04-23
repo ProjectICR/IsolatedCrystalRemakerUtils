@@ -55,7 +55,7 @@ public class CTStarLightRecipe {
 
         @Override
         public void apply() {
-            new StarLightRecipe(name, CraftTweakerMC.getItemStack(output), input, seconds, additionalOutput, additionalInput);
+            StarLightRecipe.create(name, CraftTweakerMC.getItemStack(output), input, seconds, additionalOutput, additionalInput);
         }
 
         @Override

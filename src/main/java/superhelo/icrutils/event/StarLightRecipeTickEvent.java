@@ -2,9 +2,9 @@ package superhelo.icrutils.event;
 
 import com.google.common.collect.Lists;
 import crafttweaker.api.item.IIngredient;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.annotation.Nonnull;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
@@ -15,17 +15,18 @@ import net.minecraftforge.fml.common.eventhandler.Cancelable;
 public class StarLightRecipeTickEvent extends BaseEvent {
 
     private int seconds;
+    private final List<IIngredient> additionalInput;
+    private final List<ItemStack> additionalOutput;
     private final List<EntityItem> entityItemsInSamePos;
+    private final List<IIngredient> extraInput = Lists.newArrayList();
     private final String name;
     private final BlockPos pos;
     private final EntityItem input;
-    private List<ItemStack> additionalOutput;
-    private List<IIngredient> additionalInput;
     private ItemStack output;
 
     public StarLightRecipeTickEvent(String name, EntityItem input, ItemStack output, List<EntityItem> list, BlockPos pos, int seconds, List<IIngredient> additionalInput, List<ItemStack> additionalOutput) {
         this.additionalOutput = additionalOutput.stream().map(ItemStack::copy).collect(Collectors.toList());
-        this.additionalInput = Lists.newArrayList(additionalInput);
+        this.additionalInput = additionalInput;
         this.entityItemsInSamePos = list;
         this.output = output.copy();
         this.seconds = seconds;
@@ -46,7 +47,7 @@ public class StarLightRecipeTickEvent extends BaseEvent {
         return output;
     }
 
-    public void setOutput(@Nonnull ItemStack output) {
+    public void setOutput(ItemStack output) {
         this.output = output;
     }
 
@@ -70,24 +71,25 @@ public class StarLightRecipeTickEvent extends BaseEvent {
         return this.additionalOutput;
     }
 
-    public void setAdditionalOutput(@Nonnull List<ItemStack> additionalOutput) {
-        this.additionalOutput = additionalOutput;
+    public List<IIngredient> getAdditionalInput() {
+        return Collections.unmodifiableList(this.additionalInput);
     }
 
     public void addAdditionalOutput(ItemStack stack) {
         this.additionalOutput.add(stack);
     }
 
-    public List<IIngredient> getAdditionalInput() {
-        return this.additionalInput;
+    public void setAdditionalOutput(List<ItemStack> additionalOutput) {
+        this.additionalOutput.clear();
+        this.additionalOutput.addAll(additionalOutput);
     }
 
-    public void setAdditionalInput(List<IIngredient> additionalInput) {
-        this.additionalInput = additionalInput;
+    public List<IIngredient> getExtraInput() {
+        return this.extraInput;
     }
 
-    public void addAdditionalInput(IIngredient iIngredient) {
-        this.additionalInput.add(iIngredient);
+    public void addExtraInput(IIngredient iIngredient) {
+        this.extraInput.add(iIngredient);
     }
 
     public String getName() {

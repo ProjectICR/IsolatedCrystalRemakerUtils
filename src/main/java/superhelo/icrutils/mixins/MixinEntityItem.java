@@ -50,8 +50,8 @@ public abstract class MixinEntityItem extends Entity {
         }
 
         IBlockState state = world.getBlockState(new BlockPos(this));
-        if (!this.world.isRemote && this.getEntityData().getBoolean("starLightInput") && state.getBlock() instanceof FluidBlockLiquidStarlight && state.getValue(BlockFluidBase.LEVEL) == 0) {
-            StarLightRecipe recipe = StarLightUtils.getRecipeByInput(item);
+        if (!this.world.isRemote && StarLightUtils.haveRecipeForMainInput(item) && state.getBlock() instanceof FluidBlockLiquidStarlight && state.getValue(BlockFluidBase.LEVEL) == 0) {
+            StarLightRecipe recipe = StarLightUtils.getRecipeByMainInput(item);
             if (Objects.nonNull(recipe)) {
                 recipe.test((EntityItem) (Object) this);
             }

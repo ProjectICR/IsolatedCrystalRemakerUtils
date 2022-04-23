@@ -82,8 +82,8 @@ public class CTStarLightRecipeTickEvent implements IEventCancelable {
     }
 
     @ZenMethod
-    public void addAdditionalInput(IIngredient iIngredient) {
-        event.getAdditionalInput().add(iIngredient);
+    public void addExtraInput(IIngredient iIngredient) {
+        event.addExtraInput(iIngredient);
     }
 
     @ZenMethod

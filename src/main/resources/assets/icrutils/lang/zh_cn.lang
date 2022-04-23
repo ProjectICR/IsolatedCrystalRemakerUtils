@@ -8,6 +8,7 @@ itemGroup.icrutils=ICRUtils 物品栏
 icrutils.starlight_fluid_transformation=星能液浸泡合成
 
 # JEI
+icrutils.jei.time_required=所需 %ds
 icrutils.jei.main_input=配方主要输入物
 icrutils.jei.main_output=配方主要输出物
 

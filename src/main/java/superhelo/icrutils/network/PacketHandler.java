@@ -18,6 +18,7 @@ public class PacketHandler {
 
     public static void preInit() {
         INSTANCE.registerMessage(PacketStageSync.Handler.class, PacketStageSync.class, 0, Side.CLIENT);
+        INSTANCE.registerMessage(PacketStageSync.Handler.class, PacketStageSync.class, 1, Side.SERVER);
     }
 
     public static void dispatchTEToNearbyPlayers(TileEntity tile) {

@@ -8,6 +8,7 @@ itemGroup.icrutils=ICRUtils ItemGroup
 icrutils.starlight_fluid_transformation=Starlight Fluid Transformation
 
 # JEI
+icrutils.jei.time_required=Required %ds
 icrutils.jei.main_input=Main input of the recipe
 icrutils.jei.main_output=Main output of the recipe
 

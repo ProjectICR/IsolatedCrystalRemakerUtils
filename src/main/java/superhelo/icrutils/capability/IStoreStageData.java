@@ -1,4 +1,4 @@
-package superhelo.icrutils.cap;
+package superhelo.icrutils.capability;
 
 import java.util.Set;
 import javax.annotation.Nonnull;

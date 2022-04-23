@@ -1,4 +1,4 @@
-package superhelo.icrutils.cap;
+package superhelo.icrutils.capability;
 
 import javax.annotation.Nullable;
 import net.minecraft.nbt.NBTBase;

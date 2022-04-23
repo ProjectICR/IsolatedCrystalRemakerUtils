@@ -11,17 +11,17 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import superhelo.icrutils.blocks.BlockHandler;
-import superhelo.icrutils.cap.CapabilityHandler;
+import superhelo.icrutils.capability.CapabilityHandler;
 import superhelo.icrutils.network.PacketHandler;
 import superhelo.icrutils.proxy.CommonProxy;
 
-@Mod(modid = ICRUtils.MODID, name = ICRUtils.NAME, version = ICRUtils.VERSION, dependencies = ICRUtils.DESPENDENCIES)
+@Mod(modid = ICRUtils.MODID, name = ICRUtils.NAME, version = ICRUtils.VERSION, dependencies = ICRUtils.DEPENDENCIES)
 public class ICRUtils {
 
     public static final String MODID = "icrutils";
     public static final String NAME = "ICRUtils";
     public static final String VERSION = "1.0";
-    public static final String DESPENDENCIES = "required-after:crafttweaker;required-after:mixinbooter;";
+    public static final String DEPENDENCIES = "required-after:crafttweaker;required-after:mixinbooter;";
     public static final Logger LOGGER = LogManager.getLogger(NAME);
 
     @SidedProxy(clientSide = "superhelo.icrutils.proxy.ClientProxy", serverSide = "superhelo.icrutils.proxy.CommonProxy")
