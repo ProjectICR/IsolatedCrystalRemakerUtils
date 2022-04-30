@@ -8,4 +8,7 @@ public class CommonProxy {
     public void updateStageData(Set<String> stages, Mode mode) {
     }
 
+    public void onModelRegistry() {
+    }
+
 }

@@ -18,7 +18,7 @@ public class MixinEarlyInit implements IEarlyMixinLoader, IFMLLoadingPlugin {
 
     @Override
     public List<String> getMixinConfigs() {
-        LogManager.getLogger(ICRUtils.NAME + "Mixins").info("Init Vanilla Mixins");
+        LogManager.getLogger(ICRUtils.NAME + " Mixins").info("Init Vanilla Mixins");
         return Lists.newArrayList("mixins.icrutils.vanilla.json");
     }
 

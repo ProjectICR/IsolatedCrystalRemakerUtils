@@ -78,15 +78,15 @@ repositories {
 }
 
 dependencies {
-    deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.20.+"
+    deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.20.674"
     deobfCompile "curse.maven:AstralSorcery-241721:3044416"
     deobfCompile "curse.maven:ProjectE-226410:2702991"
     deobfCompile "mezz.jei:jei_1.12.2:4.16.1.302"
     deobfCompile "zone.rong:mixinbooter:4.2"
 
-    runtime "cofh:RedstoneFlux:1.12-2.1.0.+:universal"
-    runtime "curse.maven:Baubles-227083:2518667"
-    runtime "youyihj:zenutils:1.10.1"
+    compile "cofh:RedstoneFlux:1.12-2.1.0.+:universal"
+    compile "curse.maven:Baubles-227083:2518667"
+    compile "youyihj:zenutils:1.10.1"
 }
 
 processResources {

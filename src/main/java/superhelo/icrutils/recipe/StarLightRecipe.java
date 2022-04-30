@@ -34,8 +34,8 @@ public class StarLightRecipe implements Predicate<EntityItem> {
 
     public static final Set<Item> ADDITIONAL_INPUT_LIST = Sets.newHashSet();
     public static final Map<Item, StarLightRecipe> STAR_LIGHT_INPUT_MAP = Maps.newHashMap();
-    public static final Map<Item, List<StarLightRecipe>> STAR_LIGHT_OUTPUT_MAP = Maps.newHashMap();
     public static final Map<String, StarLightRecipe> STAR_LIGHT_RECIPE_MAP = Maps.newHashMap();
+    public static final Map<Item, List<StarLightRecipe>> STAR_LIGHT_OUTPUT_MAP = Maps.newHashMap();
     private static final String NBT_KEY = "starLightRecipeTime";
 
     private StarLightRecipe(String name, ItemStack output, IIngredient input, int seconds, List<ItemStack> additionalOutput, List<IIngredient> additionalInput) {

@@ -56,7 +56,7 @@ public class StageUtils {
         mode.getConsumer().accept(player.getCapability(CapabilityHandler.STORE_STAGE_DATA, null), stages);
 
         if (player instanceof EntityPlayerMP) {
-            PacketHandler.INSTANCE.sendTo(new PacketStageSync(stages, mode), (EntityPlayerMP) player);
+            PacketHandler.INSTANCE.sendTo(PacketStageSync.load(stages, mode), (EntityPlayerMP) player);
         }
     }
 

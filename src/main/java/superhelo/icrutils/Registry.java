@@ -1,14 +1,10 @@
 package superhelo.icrutils;
 
-import java.util.Objects;
-import javax.annotation.Nonnull;
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.client.event.ModelRegistryEvent;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -18,15 +14,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import superhelo.icrutils.blocks.BlockHandler;
 import superhelo.icrutils.items.ItemHandler;
 import superhelo.icrutils.tileentity.TileEntityBase;
-import superhelo.icrutils.tileentity.render.RenderInit;
 
 @EventBusSubscriber(modid = ICRUtils.MODID)
 public class Registry {
-
-    private static void registerModelResourceLocation(@Nonnull Item item) {
-        ModelLoader.setCustomModelResourceLocation(item, 0,
-            new ModelResourceLocation(Objects.requireNonNull(item.getRegistryName()), "inventory"));
-    }
 
     @SubscribeEvent
     public static void onBlockRegistry(RegistryEvent.Register<Block> event) {
@@ -41,10 +31,8 @@ public class Registry {
     }
 
     @SubscribeEvent
-    @SideOnly(Side.CLIENT)
     public static void onModelRegistry(ModelRegistryEvent event) {
-        RenderInit.init();
-        ItemHandler.ITEM_REGISTER.forEach(Registry::registerModelResourceLocation);
+        ICRUtils.proxy.onModelRegistry();
     }
 
     private static ItemStack getBucket() {

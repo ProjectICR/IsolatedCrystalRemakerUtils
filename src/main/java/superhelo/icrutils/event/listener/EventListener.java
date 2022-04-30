@@ -45,7 +45,7 @@ public class EventListener {
         Entity entity = event.getEntity();
 
         if (entity instanceof EntityPlayerSP) {
-            PacketHandler.INSTANCE.sendToServer(new PacketStageSync(Collections.EMPTY_SET, Mode.SYNC));
+            PacketHandler.INSTANCE.sendToServer(PacketStageSync.load(Collections.EMPTY_SET, Mode.SYNC));
         }
 
     }

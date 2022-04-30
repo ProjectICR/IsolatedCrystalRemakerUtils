@@ -5,7 +5,6 @@ import io.netty.buffer.ByteBuf;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -19,17 +18,17 @@ public class PacketStageSync implements IMessage {
     private Mode mode;
     private Set<String> stages;
 
-    public PacketStageSync() {
-    }
+    public static PacketStageSync load(Set<String> stages, Mode mode) {
+        PacketStageSync pkt = new PacketStageSync();
+        pkt.mode = mode;
+        pkt.stages = stages;
 
-    public PacketStageSync(Set<String> stages, Mode mode) {
-        this.mode = mode;
-        this.stages = stages;
+        return pkt;
     }
 
     @Override
     public void fromBytes(ByteBuf buf) {
-        this.mode = new PacketBuffer(buf).readEnumValue(Mode.class);
+        this.mode = Mode.values()[buf.readInt()];
         this.stages = Sets.newHashSet();
         while (buf.readableBytes() > 0) {
             stages.add(ByteBufUtils.readUTF8String(buf));
@@ -38,7 +37,7 @@ public class PacketStageSync implements IMessage {
 
     @Override
     public void toBytes(ByteBuf buf) {
-        new PacketBuffer(buf).writeEnumValue(mode);
+        buf.writeInt(mode.ordinal());
         stages.forEach(stage -> ByteBufUtils.writeUTF8String(buf, stage));
     }
 
@@ -67,9 +66,9 @@ public class PacketStageSync implements IMessage {
         public IMessage onMessage(PacketStageSync message, MessageContext ctx) {
             if (message.mode != Mode.SYNC && ctx.side.isClient()) {
                 ICRUtils.proxy.updateStageData(message.stages, message.mode);
-            } else if (!StageUtils.getStagesFromPlayer(ctx.getServerHandler().player).isEmpty()) {
+            } else if (!StageUtils.getStagesFromPlayer(ctx.getServerHandler().player).isEmpty() && ctx.side.isServer()) {
                 EntityPlayerMP player = ctx.getServerHandler().player;
-                PacketHandler.INSTANCE.sendTo(new PacketStageSync(StageUtils.getStagesFromPlayer(player), Mode.ADD), player);
+                PacketHandler.INSTANCE.sendTo(PacketStageSync.load(StageUtils.getStagesFromPlayer(player), Mode.ADD), player);
             }
             return null;
         }
