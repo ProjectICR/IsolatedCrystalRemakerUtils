@@ -18,6 +18,7 @@ public class RenderCeremonialColumn extends TileEntitySpecialRenderer<TileEntity
     @Override
     public void renderTileEntityFast(TileEntityCeremonialColumn tile, double x, double y, double z, float partialTicks, int destroyStage, float alpha, BufferBuilder bufferBuilder) {
         ItemStack stack = tile.getInventory().getStackInSlot(0);
+
         if (!stack.isEmpty()) {
             double tick = Minecraft.getSystemTime() / 800.0D;
             float scale = (stack.getItem() instanceof ItemBlock ? 0.85F : 0.65F);

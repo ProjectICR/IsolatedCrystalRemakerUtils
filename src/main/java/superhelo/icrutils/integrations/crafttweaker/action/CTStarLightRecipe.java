@@ -8,7 +8,6 @@ import crafttweaker.api.item.IItemStack;
 import crafttweaker.api.minecraft.CraftTweakerMC;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 import net.minecraft.item.ItemStack;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
@@ -17,7 +16,7 @@ import superhelo.icrutils.recipe.StarLightUtils;
 import superhelo.icrutils.utils.Utils;
 
 @ZenRegister
-@ZenClass("mods.icrutils.support.StarLightRecipe")
+@ZenClass("mods.icrutils.support.StarLight")
 public class CTStarLightRecipe {
 
     @ZenMethod
@@ -32,7 +31,7 @@ public class CTStarLightRecipe {
 
     @ZenMethod
     public static void addRecipe(String name, IItemStack output, IIngredient input, int seconds, IIngredient[] additionalInput, IItemStack[] additionalOutput) {
-        CraftTweakerAPI.apply(new ActionStarLightRecipe(name, output, input, seconds, Arrays.stream(additionalInput).collect(Collectors.toList()), Utils.getItemStacks(additionalOutput)));
+        CraftTweakerAPI.apply(new ActionStarLightRecipe(name, output, input, seconds, Arrays.asList(additionalInput), Utils.getItemStacks(additionalOutput)));
     }
 
     public static class ActionStarLightRecipe implements IAction {
@@ -60,7 +59,7 @@ public class CTStarLightRecipe {
 
         @Override
         public boolean validate() {
-            return !StarLightUtils.haveRecipeForName(name);
+            return !StarLightUtils.haveRecipe(name);
         }
 
         @Override

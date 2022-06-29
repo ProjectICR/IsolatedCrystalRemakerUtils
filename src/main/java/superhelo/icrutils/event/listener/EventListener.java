@@ -13,13 +13,13 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import superhelo.icrutils.ICRUtils;
 import superhelo.icrutils.capability.CapabilityHandler;
-import superhelo.icrutils.capability.IStoreStageData;
+import superhelo.icrutils.capability.StoreStageData;
 import superhelo.icrutils.capability.StoreStageDataProvider;
 import superhelo.icrutils.network.PacketHandler;
 import superhelo.icrutils.network.PacketStageSync;
 import superhelo.icrutils.network.PacketStageSync.Mode;
 
-@EventBusSubscriber(modid = ICRUtils.MODID)
+@EventBusSubscriber
 public class EventListener {
 
     @SubscribeEvent
@@ -31,8 +31,8 @@ public class EventListener {
 
     @SubscribeEvent
     public static void onPlayerClone(PlayerEvent.Clone event) {
-        IStoreStageData original = event.getOriginal().getCapability(CapabilityHandler.STORE_STAGE_DATA, null);
-        IStoreStageData now = event.getEntityPlayer().getCapability(CapabilityHandler.STORE_STAGE_DATA, null);
+        StoreStageData original = event.getOriginal().getCapability(CapabilityHandler.STORE_STAGE_DATA, null);
+        StoreStageData now = event.getEntityPlayer().getCapability(CapabilityHandler.STORE_STAGE_DATA, null);
 
         if (Objects.nonNull(original) && Objects.nonNull(now)) {
             now.setStage(original.getStages());
@@ -45,7 +45,7 @@ public class EventListener {
         Entity entity = event.getEntity();
 
         if (entity instanceof EntityPlayerSP) {
-            PacketHandler.INSTANCE.sendToServer(PacketStageSync.load(Collections.EMPTY_SET, Mode.SYNC));
+            PacketHandler.INSTANCE.sendToServer(PacketStageSync.load(Collections.emptySet(), Mode.SYNC));
         }
 
     }

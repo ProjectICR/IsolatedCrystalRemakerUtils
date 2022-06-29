@@ -11,6 +11,7 @@ import superhelo.icrutils.ICRUtils;
 public class TileEntityBase extends TileEntity {
 
     public static void init() {
+        register(TileEntityFusionTable.class, "fusion_table");
         register(TileEntityCeremonialColumn.class, "ceremonial_column");
     }
 

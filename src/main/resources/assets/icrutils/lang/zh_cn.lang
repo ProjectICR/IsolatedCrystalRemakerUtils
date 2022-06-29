@@ -1,14 +1,19 @@
 # 方块
 tile.icrutils.ceremonial_column.name=仪式柱
+tile.icrutils.fusion_table.name=融合台
+
+# 物品
+item.icrutils.creature_item.name=生物
 
 # 物品栏
 itemGroup.icrutils=ICRUtils 物品栏
 
 # 配方
 icrutils.starlight_fluid_transformation=星能液浸泡合成
+icrutils.fusion_table_recipe=融合台合成
 
 # JEI
-icrutils.jei.time_required=所需 %ds
+icrutils.jei.time_required=时间: %d秒
 icrutils.jei.main_input=配方主要输入物
 icrutils.jei.main_output=配方主要输出物
 

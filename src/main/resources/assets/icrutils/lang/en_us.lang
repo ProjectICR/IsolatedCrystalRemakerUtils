@@ -1,14 +1,19 @@
-#Block
+# Block
 tile.icrutils.ceremonial_column.name=Ceremonial Column
+tile.icrutils.fusion_table.name=Fusion Table
+
+# Item
+item.icrutils.creature_item.name=Creature
 
 #Item Group
 itemGroup.icrutils=ICRUtils ItemGroup
 
 # Recipe
 icrutils.starlight_fluid_transformation=Starlight Fluid Transformation
+icrutils.fusion_table_recipe=Fusion Table Recipe
 
 # JEI
-icrutils.jei.time_required=Required %ds
+icrutils.jei.time_required=Time: %ds
 icrutils.jei.main_input=Main input of the recipe
 icrutils.jei.main_output=Main output of the recipe
 

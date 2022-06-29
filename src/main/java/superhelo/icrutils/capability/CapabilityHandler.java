@@ -11,19 +11,19 @@ import net.minecraftforge.common.capabilities.CapabilityManager;
 
 public class CapabilityHandler {
 
-    @CapabilityInject(IStoreStageData.class)
-    public static Capability<IStoreStageData> STORE_STAGE_DATA;
+    @CapabilityInject(StoreStageData.class)
+    public static Capability<StoreStageData> STORE_STAGE_DATA;
 
     public static void preInit() {
-        CapabilityManager.INSTANCE.register(IStoreStageData.class, new IStorage<IStoreStageData>() {
+        CapabilityManager.INSTANCE.register(StoreStageData.class, new IStorage<StoreStageData>() {
             @Nullable
             @Override
-            public NBTBase writeNBT(Capability<IStoreStageData> capability, IStoreStageData instance, EnumFacing side) {
+            public NBTBase writeNBT(Capability<StoreStageData> capability, StoreStageData instance, EnumFacing side) {
                 return instance.serializeNBT();
             }
 
             @Override
-            public void readNBT(Capability<IStoreStageData> capability, IStoreStageData instance, EnumFacing side, NBTBase nbt) {
+            public void readNBT(Capability<StoreStageData> capability, StoreStageData instance, EnumFacing side, NBTBase nbt) {
                 if (nbt instanceof NBTTagCompound) {
                     instance.deserializeNBT((NBTTagCompound) nbt);
                 }

@@ -14,6 +14,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import superhelo.icrutils.ICRUtils;
 import superhelo.icrutils.recipe.StarLightRecipe;
 import superhelo.icrutils.recipe.StarLightUtils;
 
@@ -50,10 +51,12 @@ public abstract class MixinEntityItem extends Entity {
         }
 
         IBlockState state = world.getBlockState(new BlockPos(this));
-        if (!this.world.isRemote && StarLightUtils.haveRecipeForMainInput(item) && state.getBlock() instanceof FluidBlockLiquidStarlight && state.getValue(BlockFluidBase.LEVEL) == 0) {
-            StarLightRecipe recipe = StarLightUtils.getRecipeByMainInput(item);
+        if (!this.world.isRemote && StarLightUtils.haveRecipe(item) && state.getBlock() instanceof FluidBlockLiquidStarlight && state.getValue(BlockFluidBase.LEVEL) == 0) {
+            StarLightRecipe recipe = StarLightUtils.getRecipe(item);
             if (Objects.nonNull(recipe)) {
                 recipe.test((EntityItem) (Object) this);
+            } else {
+                ICRUtils.LOGGER.error("You should report the mixin bug", new NullPointerException());
             }
         }
 

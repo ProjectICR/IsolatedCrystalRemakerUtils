@@ -9,13 +9,12 @@ import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import superhelo.icrutils.blocks.BlockHandler;
 import superhelo.icrutils.items.ItemHandler;
 import superhelo.icrutils.tileentity.TileEntityBase;
+import superhelo.icrutils.utils.nbt.TagCompoundProxy;
 
-@EventBusSubscriber(modid = ICRUtils.MODID)
+@EventBusSubscriber
 public class Registry {
 
     @SubscribeEvent
@@ -37,11 +36,10 @@ public class Registry {
 
     private static ItemStack getBucket() {
         ItemStack bucket = new ItemStack(ForgeModContainer.getInstance().universalBucket);
-        NBTTagCompound nbt = new NBTTagCompound();
-        nbt.setString("FluidName", "astralsorcery.liquidstarlight");
-        nbt.setInteger("Amount", 1000);
+        NBTTagCompound nbt = new TagCompoundProxy()
+            .setString("FluidName", "astralsorcery.liquidstarlight")
+            .setInteger("Amount", 1000).getNbt();
         bucket.setTagCompound(nbt);
-
         return bucket;
     }
 

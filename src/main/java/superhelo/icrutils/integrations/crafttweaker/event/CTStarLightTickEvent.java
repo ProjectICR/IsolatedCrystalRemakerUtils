@@ -14,16 +14,16 @@ import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenGetter;
 import stanhebben.zenscript.annotations.ZenMethod;
 import stanhebben.zenscript.annotations.ZenSetter;
-import superhelo.icrutils.event.StarLightRecipeTickEvent;
+import superhelo.icrutils.event.StarLightTickEvent;
 import superhelo.icrutils.utils.Utils;
 
 @ZenRegister
-@ZenClass("mods.icrutils.support.StarLightRecipeTickEvent")
-public class CTStarLightRecipeTickEvent implements IEventCancelable {
+@ZenClass("mods.icrutils.support.StarLightTickEvent")
+public class CTStarLightTickEvent implements IEventCancelable {
 
-    private final StarLightRecipeTickEvent event;
+    private final StarLightTickEvent event;
 
-    public CTStarLightRecipeTickEvent(StarLightRecipeTickEvent event) {
+    public CTStarLightTickEvent(StarLightTickEvent event) {
         this.event = event;
     }
 
@@ -82,8 +82,13 @@ public class CTStarLightRecipeTickEvent implements IEventCancelable {
     }
 
     @ZenMethod
-    public void addExtraInput(IIngredient iIngredient) {
-        event.addExtraInput(iIngredient);
+    public void addInput(IIngredient iIngredient) {
+        event.addInput(iIngredient);
+    }
+
+    @ZenMethod
+    public List<IIngredient> getInputEventAdd() {
+        return event.getInputEventAdd();
     }
 
     @ZenMethod

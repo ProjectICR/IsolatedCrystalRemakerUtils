@@ -10,7 +10,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import superhelo.icrutils.ICRUtils;
-import superhelo.icrutils.capability.IStoreStageData;
+import superhelo.icrutils.capability.StoreStageData;
 import superhelo.icrutils.stage.StageUtils;
 
 public class PacketStageSync implements IMessage {
@@ -30,14 +30,17 @@ public class PacketStageSync implements IMessage {
     public void fromBytes(ByteBuf buf) {
         this.mode = Mode.values()[buf.readInt()];
         this.stages = Sets.newHashSet();
-        while (buf.readableBytes() > 0) {
+
+        for (int size = buf.readInt(); size > 0; size--) {
             stages.add(ByteBufUtils.readUTF8String(buf));
         }
+
     }
 
     @Override
     public void toBytes(ByteBuf buf) {
         buf.writeInt(mode.ordinal());
+        buf.writeInt(stages.size());
         stages.forEach(stage -> ByteBufUtils.writeUTF8String(buf, stage));
     }
 
@@ -48,13 +51,13 @@ public class PacketStageSync implements IMessage {
         CLEAR((data, stages) -> data.clearStage()),
         SYNC(ADD.consumer);
 
-        final BiConsumer<IStoreStageData, Set<String>> consumer;
+        final BiConsumer<StoreStageData, Set<String>> consumer;
 
-        Mode(BiConsumer<IStoreStageData, Set<String>> consumer) {
+        Mode(BiConsumer<StoreStageData, Set<String>> consumer) {
             this.consumer = consumer;
         }
 
-        public BiConsumer<IStoreStageData, Set<String>> getConsumer() {
+        public BiConsumer<StoreStageData, Set<String>> getConsumer() {
             return this.consumer;
         }
 
@@ -66,9 +69,12 @@ public class PacketStageSync implements IMessage {
         public IMessage onMessage(PacketStageSync message, MessageContext ctx) {
             if (message.mode != Mode.SYNC && ctx.side.isClient()) {
                 ICRUtils.proxy.updateStageData(message.stages, message.mode);
-            } else if (!StageUtils.getStagesFromPlayer(ctx.getServerHandler().player).isEmpty() && ctx.side.isServer()) {
+            } else if (ctx.side.isServer()) {
                 EntityPlayerMP player = ctx.getServerHandler().player;
-                PacketHandler.INSTANCE.sendTo(PacketStageSync.load(StageUtils.getStagesFromPlayer(player), Mode.ADD), player);
+                Set<String> stages = StageUtils.getStagesFromPlayer(player);
+                if (!stages.isEmpty()) {
+                    PacketHandler.INSTANCE.sendTo(PacketStageSync.load(stages, Mode.ADD), player);
+                }
             }
             return null;
         }

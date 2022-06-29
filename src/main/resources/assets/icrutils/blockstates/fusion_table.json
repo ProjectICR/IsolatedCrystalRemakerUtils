@@ -1,0 +1,15 @@
+{
+  "forge_marker": 1,
+  "default": {
+    "model": "icrutils:fusion_table",
+    "transform": "forge:default-block"
+  },
+  "variants": {
+    "normal": [
+      {}
+    ],
+    "inventory": [
+      {}
+    ]
+  }
+}

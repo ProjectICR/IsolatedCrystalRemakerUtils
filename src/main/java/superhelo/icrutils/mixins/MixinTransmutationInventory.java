@@ -25,7 +25,7 @@ public abstract class MixinTransmutationInventory {
 
     @Inject(method = "writeIntoOutputSlot", at = @At(value = "HEAD"), cancellable = true)
     private void injectWriteIntoOutputSlot(int slot, ItemStack stack, CallbackInfo ci) {
-        if (!StageUtils.hasStage(this.player, stack)) {
+        if (!StageUtils.hasStageIgnoreNBT(this.player, stack)) {
             this.outputs.setStackInSlot(slot, ItemStack.EMPTY);
             ci.cancel();
         }

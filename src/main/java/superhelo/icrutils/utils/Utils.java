@@ -3,20 +3,17 @@ package superhelo.icrutils.utils;
 import crafttweaker.api.item.IIngredient;
 import crafttweaker.api.item.IItemStack;
 import crafttweaker.api.minecraft.CraftTweakerMC;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraftforge.oredict.OreDictionary;
 
-public class Utils {
+public final class Utils {
 
-    public static void spawnEntityItem(World world, BlockPos pos, ItemStack stack) {
-        world.spawnEntity(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), stack));
+    private Utils() {
     }
 
     public static Item getItem(IItemStack stack) {
@@ -27,26 +24,38 @@ public class Utils {
         return Arrays.stream(CraftTweakerMC.getItemStacks(stack)).collect(Collectors.toList());
     }
 
-    public static List<ItemStack> getItemStacks(IIngredient iIngredient) {
-        return iIngredient.getItems()
+    public static List<ItemStack> getItemStacks(IIngredient ingredient) {
+        return ingredient.getItems()
             .stream()
-            .map(stack -> stack.amount(iIngredient.getAmount()))
+            .map(stack -> stack.amount(ingredient.getAmount()))
             .map(CraftTweakerMC::getItemStack)
             .collect(Collectors.toList());
     }
 
-    public static <T> List<T> addAllList(List<? extends T> to, List<? extends T> from) {
-        List<T> l = new ArrayList<>(to.size() + from.size());
-        l.addAll(to);
-        l.addAll(from);
-        return l;
+    public static boolean isNotEmpty(ItemStack stack) {
+        return !stack.isEmpty();
     }
 
-    public static <T> List<T> addAllList(T element, List<T> list) {
-        List<T> l = new ArrayList<>(1 + list.size());
-        l.add(element);
-        l.addAll(list);
-        return l;
+    public static boolean areItemStacksEqual(ItemStack stackA, ItemStack stackB) {
+        if (stackA.isEmpty() && stackB.isEmpty()) {
+            return true;
+        } else {
+            return !stackA.isEmpty() && !stackB.isEmpty() && isItemStackEqual(stackA, stackB);
+        }
+    }
+
+    private static boolean isItemStackEqual(ItemStack stackA, ItemStack stackB) {
+        if (stackA.getCount() != stackB.getCount()) {
+            return false;
+        } else if (stackA.getItem() != stackB.getItem()) {
+            return false;
+        } else if (stackA.getItemDamage() != OreDictionary.WILDCARD_VALUE && stackA.getItemDamage() != stackB.getItemDamage()) {
+            return false;
+        } else if (stackA.getTagCompound() == null && stackB.getTagCompound() != null) {
+            return false;
+        } else {
+            return (stackA.getTagCompound() == null || Objects.equals(stackA.getTagCompound(), stackB.getTagCompound()));
+        }
     }
 
 }

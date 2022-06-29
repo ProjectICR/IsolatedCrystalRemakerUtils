@@ -1,42 +1,26 @@
 package superhelo.icrutils.recipe;
 
-import java.util.List;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import stanhebben.zenscript.util.Pair;
 
-public class StarLightUtils {
+public final class StarLightUtils {
 
-    public static boolean haveRecipeForName(String name) {
+    private StarLightUtils() {
+    }
+
+    public static boolean haveRecipe(String name) {
         return StarLightRecipe.STAR_LIGHT_RECIPE_MAP.containsKey(name);
     }
 
-    public static StarLightRecipe getRecipeByName(String name) {
-        return StarLightRecipe.STAR_LIGHT_RECIPE_MAP.get(name);
-    }
-
-    public static boolean haveRecipeForInput(ItemStack input) {
+    public static boolean haveRecipe(ItemStack input) {
         Item item = input.getItem();
-        return StarLightRecipe.STAR_LIGHT_INPUT_MAP.containsKey(item) || StarLightRecipe.ADDITIONAL_INPUT_LIST.contains(item);
+        return StarLightRecipe.STAR_LIGHT_INPUT_MAP.containsKey(item) && StarLightRecipe.STAR_LIGHT_INPUT_MAP.get(item).getKey().equals(IngredientType.MAIN);
     }
 
-    public static boolean haveRecipeForMainInput(ItemStack input) {
-        return StarLightRecipe.STAR_LIGHT_INPUT_MAP.containsKey(input.getItem());
-    }
-
-    public static boolean haveRecipeForAdditionalInput(ItemStack input) {
-        return StarLightRecipe.ADDITIONAL_INPUT_LIST.contains(input.getItem());
-    }
-
-    public static StarLightRecipe getRecipeByMainInput(ItemStack input) {
-        return StarLightRecipe.STAR_LIGHT_INPUT_MAP.get(input.getItem());
-    }
-
-    public static boolean haveRecipeForOutput(ItemStack output) {
-        return StarLightRecipe.STAR_LIGHT_OUTPUT_MAP.containsKey(output.getItem());
-    }
-
-    public static List<StarLightRecipe> getRecipeByOutput(ItemStack output) {
-        return StarLightRecipe.STAR_LIGHT_OUTPUT_MAP.get(output.getItem());
+    public static StarLightRecipe getRecipe(ItemStack input) {
+        Pair<IngredientType, StarLightRecipe> pair = StarLightRecipe.STAR_LIGHT_INPUT_MAP.get(input.getItem());
+        return pair.getKey().equals(IngredientType.MAIN) ? pair.getValue() : null;
     }
 
 }

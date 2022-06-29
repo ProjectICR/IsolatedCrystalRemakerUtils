@@ -19,7 +19,7 @@ public abstract class MixinSlotOutput extends SlotItemHandler {
 
     @Inject(method = "canTakeStack", at = @At(value = "HEAD"), cancellable = true)
     private void injectCanTakeStack(EntityPlayer player, CallbackInfoReturnable<Boolean> cir) {
-        if (!StageUtils.hasStage(player, this.getStack())) {
+        if (!StageUtils.hasStageIgnoreNBT(player, this.getStack())) {
             cir.setReturnValue(false);
         }
 

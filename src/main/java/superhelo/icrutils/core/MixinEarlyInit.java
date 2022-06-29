@@ -1,6 +1,6 @@
 package superhelo.icrutils.core;
 
-import com.google.common.collect.Lists;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Nullable;
@@ -19,7 +19,7 @@ public class MixinEarlyInit implements IEarlyMixinLoader, IFMLLoadingPlugin {
     @Override
     public List<String> getMixinConfigs() {
         LogManager.getLogger(ICRUtils.NAME + " Mixins").info("Init Vanilla Mixins");
-        return Lists.newArrayList("mixins.icrutils.vanilla.json");
+        return Collections.singletonList("mixins.icrutils.vanilla.json");
     }
 
     @Override

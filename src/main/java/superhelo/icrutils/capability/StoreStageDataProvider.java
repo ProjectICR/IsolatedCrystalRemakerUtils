@@ -9,7 +9,7 @@ import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 
 public class StoreStageDataProvider implements ICapabilitySerializable<NBTTagCompound> {
 
-    private final IStoreStageData data = new StoreStageData();
+    private final StoreStageData data = new StoreStageData();
 
     @Override
     public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {

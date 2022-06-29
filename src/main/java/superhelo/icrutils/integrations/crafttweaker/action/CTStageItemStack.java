@@ -12,7 +12,7 @@ import superhelo.icrutils.stage.StageHandler;
 
 @ZenRegister
 @ZenClass("mods.icrutils.support.StageItemStack")
-public class CTAddStageItemStack {
+public class CTStageItemStack {
 
     @ZenMethod
     public static void register(String stage, IItemStack stack) {

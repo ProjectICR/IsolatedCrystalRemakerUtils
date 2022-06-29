@@ -1,7 +1,8 @@
 {
   "forge_marker" : 1,
   "default" : {
-    "model": "icrutils:ceremonial_column"
+    "model": "icrutils:ceremonial_column",
+    "transform": "forge:default-block"
   },
   "variants" : {
     "normal" : [{}],

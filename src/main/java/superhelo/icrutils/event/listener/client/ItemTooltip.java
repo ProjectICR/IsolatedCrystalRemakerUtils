@@ -8,10 +8,9 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
-import superhelo.icrutils.ICRUtils;
 import superhelo.icrutils.stage.StageHandler;
 
-@EventBusSubscriber(value = Side.CLIENT, modid = ICRUtils.MODID)
+@EventBusSubscriber(value = Side.CLIENT)
 public class ItemTooltip {
 
     @SubscribeEvent

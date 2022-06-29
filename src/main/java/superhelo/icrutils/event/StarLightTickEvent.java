@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
 
 @Cancelable
-public class StarLightRecipeTickEvent extends BaseEvent {
+public class StarLightTickEvent extends BaseEvent {
 
     private int seconds;
     private final List<IIngredient> additionalInput;
@@ -24,7 +24,7 @@ public class StarLightRecipeTickEvent extends BaseEvent {
     private final EntityItem input;
     private ItemStack output;
 
-    public StarLightRecipeTickEvent(String name, EntityItem input, ItemStack output, List<EntityItem> list, BlockPos pos, int seconds, List<IIngredient> additionalInput, List<ItemStack> additionalOutput) {
+    public StarLightTickEvent(String name, EntityItem input, ItemStack output, List<EntityItem> list, BlockPos pos, int seconds, List<IIngredient> additionalInput, List<ItemStack> additionalOutput) {
         this.additionalOutput = additionalOutput.stream().map(ItemStack::copy).collect(Collectors.toList());
         this.additionalInput = additionalInput;
         this.entityItemsInSamePos = list;
@@ -84,11 +84,11 @@ public class StarLightRecipeTickEvent extends BaseEvent {
         this.additionalOutput.addAll(additionalOutput);
     }
 
-    public List<IIngredient> getExtraInput() {
+    public List<IIngredient> getInputEventAdd() {
         return this.extraInput;
     }
 
-    public void addExtraInput(IIngredient iIngredient) {
+    public void addInput(IIngredient iIngredient) {
         this.extraInput.add(iIngredient);
     }
 

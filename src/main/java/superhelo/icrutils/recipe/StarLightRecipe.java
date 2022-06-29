@@ -1,14 +1,12 @@
 package superhelo.icrutils.recipe;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
 import crafttweaker.api.item.IIngredient;
+import crafttweaker.api.item.IItemStack;
+import crafttweaker.api.item.IMutableItemStack;
 import crafttweaker.api.minecraft.CraftTweakerMC;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import javax.annotation.Nullable;
@@ -19,9 +17,11 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import org.apache.commons.lang3.mutable.MutableInt;
-import superhelo.icrutils.event.StarLightRecipeTickEvent;
+import stanhebben.zenscript.util.Pair;
+import superhelo.icrutils.event.StarLightTickEvent;
+import superhelo.icrutils.utils.ListUtils;
 import superhelo.icrutils.utils.Utils;
+import superhelo.icrutils.utils.WorldUtils;
 
 public class StarLightRecipe implements Predicate<EntityItem> {
 
@@ -32,10 +32,8 @@ public class StarLightRecipe implements Predicate<EntityItem> {
     private final List<ItemStack> additionalOutput;
     private final List<IIngredient> additionalInput;
 
-    public static final Set<Item> ADDITIONAL_INPUT_LIST = Sets.newHashSet();
-    public static final Map<Item, StarLightRecipe> STAR_LIGHT_INPUT_MAP = Maps.newHashMap();
     public static final Map<String, StarLightRecipe> STAR_LIGHT_RECIPE_MAP = Maps.newHashMap();
-    public static final Map<Item, List<StarLightRecipe>> STAR_LIGHT_OUTPUT_MAP = Maps.newHashMap();
+    public static final Map<Item, Pair<IngredientType, StarLightRecipe>> STAR_LIGHT_INPUT_MAP = Maps.newHashMap();
     private static final String NBT_KEY = "starLightRecipeTime";
 
     private StarLightRecipe(String name, ItemStack output, IIngredient input, int seconds, List<ItemStack> additionalOutput, List<IIngredient> additionalInput) {
@@ -47,19 +45,17 @@ public class StarLightRecipe implements Predicate<EntityItem> {
         this.additionalOutput = additionalOutput;
 
         STAR_LIGHT_RECIPE_MAP.put(name, this);
-        input.getItems().forEach(stack -> STAR_LIGHT_INPUT_MAP.putIfAbsent(Utils.getItem(stack), this));
-        additionalInput.forEach(inputList -> inputList.getItems().forEach(stack -> ADDITIONAL_INPUT_LIST.add(Utils.getItem(stack))));
 
-        if (StarLightUtils.haveRecipeForOutput(output)) {
-            StarLightUtils.getRecipeByOutput(output).add(this);
-        } else {
-            StarLightRecipe.STAR_LIGHT_OUTPUT_MAP.put(output.getItem(), Lists.newArrayList(this));
-        }
+        input.getItems().forEach(itemStack -> STAR_LIGHT_INPUT_MAP.put(Utils.getItem(itemStack), new Pair<>(IngredientType.MAIN, this)));
+        additionalInput.forEach(ingredient -> ingredient.getItems()
+            .stream()
+            .filter(stack -> !STAR_LIGHT_INPUT_MAP.containsKey(Utils.getItem(stack)))
+            .forEach(stack -> STAR_LIGHT_INPUT_MAP.put(Utils.getItem(stack), new Pair<>(IngredientType.ADDITION, this))));
     }
 
     @Nullable
     public static StarLightRecipe create(String name, ItemStack output, IIngredient input, int seconds, List<ItemStack> additionalOutput, List<IIngredient> additionalInput) {
-        if (!StarLightUtils.haveRecipeForName(name)) {
+        if (!StarLightUtils.haveRecipe(name)) {
             return new StarLightRecipe(name, output, input, seconds, additionalOutput, additionalInput);
         }
         return null;
@@ -95,14 +91,14 @@ public class StarLightRecipe implements Predicate<EntityItem> {
         BlockPos pos = new BlockPos(entityItem);
 
         List<EntityItem> entityItems = world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(pos));
-        StarLightRecipeTickEvent event = new StarLightRecipeTickEvent(name, entityItem, output, entityItems, pos, seconds, additionalInput, additionalOutput);
+        StarLightTickEvent event = new StarLightTickEvent(name, entityItem, output, entityItems, pos, seconds, additionalInput, additionalOutput);
 
         if (event.post()) {
             return false;
         }
 
-        RecipeMatcher matcher = new RecipeMatcher(event);
-        if (!matcher.match()) {
+        RecipeHelper helper = new RecipeHelper(event);
+        if (!helper.match()) {
             return false;
         }
 
@@ -115,9 +111,9 @@ public class StarLightRecipe implements Predicate<EntityItem> {
 
         if (nbt.getInteger(NBT_KEY) >= (event.getSeconds() * 20)) {
             entityItem.getItem().shrink(input.getAmount());
-            matcher.stacksMatch.forEach(ItemStack::shrink);
-            Utils.spawnEntityItem(world, pos.up(), event.getOutput());
-            event.getAdditionalOutput().forEach(stack -> Utils.spawnEntityItem(world, pos.up(), stack));
+            helper.stacksMatch.forEach(ItemStack::shrink);
+            WorldUtils.spawnEntityItem(world, pos.up(), event.getOutput());
+            event.getAdditionalOutput().forEach(stack -> WorldUtils.spawnEntityItem(world, pos.up(), stack));
             if (!entityItem.getItem().isEmpty()) {
                 nbt.setInteger(NBT_KEY, 0);
             }
@@ -126,41 +122,43 @@ public class StarLightRecipe implements Predicate<EntityItem> {
         return false;
     }
 
-    private static class RecipeMatcher {
+    private static class RecipeHelper {
 
-        private final Map<ItemStack, Integer> stacksMatch = Maps.newHashMap();
+        private final List<IItemStack> stacksInWorld;
         private final List<IIngredient> additionalInput;
-        private final List<ItemStack> stacksInWorld;
+        private Map<ItemStack, Integer> stacksMatch = null;
 
-        public RecipeMatcher(StarLightRecipeTickEvent event) {
-            this.additionalInput = Utils.addAllList(event.getAdditionalInput(), event.getExtraInput())
-                .stream()
-                .filter(Objects::nonNull)
-                .collect(Collectors.toList());
+        public RecipeHelper(StarLightTickEvent event) {
+            this.additionalInput = ListUtils.mergeList(event.getAdditionalInput(), event.getInputEventAdd());
             this.stacksInWorld = event.getEntityItemsInSamePos()
                 .stream()
-                .filter(item ->
-                    StarLightUtils.haveRecipeForInput(item.getItem()) ||
-                        event.getExtraInput().stream().anyMatch(iIngredient -> iIngredient.matches(CraftTweakerMC.getIItemStack(item.getItem()))))
+                .filter(entityItem -> entityItem != event.getInput())
                 .map(EntityItem::getItem)
+                .map(CraftTweakerMC::getIItemStackMutable)
                 .collect(Collectors.toList());
         }
 
         public boolean match() {
-            MutableInt i = new MutableInt();
-
-            outside:
-            for (IIngredient input : additionalInput) {
-                for (ItemStack stack : stacksInWorld) {
-                    if (input.matches(CraftTweakerMC.getIItemStack(stack))) {
-                        i.increment();
-                        stacksMatch.put(stack, input.getAmount());
-                        continue outside;
+            if (additionalInput.size() == stacksInWorld.size() - 1) {
+                int times = 0;
+                out:
+                for (IIngredient ingredient : additionalInput) {
+                    for (IItemStack stack : stacksInWorld) {
+                        if (ingredient.contains(stack)) {
+                            times++;
+                            continue out;
+                        }
                     }
+                }
+
+                if (times == additionalInput.size()) {
+                    stacksMatch = Maps.newHashMap();
+                    stacksInWorld.forEach(stack -> stacksMatch.put(CraftTweakerMC.getItemStack((IMutableItemStack) stack), stack.getAmount()));
+                    return true;
                 }
             }
 
-            return i.intValue() == additionalInput.size();
+            return false;
         }
 
     }

@@ -8,4 +8,6 @@ public class ItemHandler {
 
     public static final List<Item> ITEM_REGISTER = Lists.newArrayList();
 
+    public static final Item ITEM_CREATURE = new ItemCreature();
+
 }

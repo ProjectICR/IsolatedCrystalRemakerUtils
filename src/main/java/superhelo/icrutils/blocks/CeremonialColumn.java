@@ -1,6 +1,7 @@
 package superhelo.icrutils.blocks;
 
 import java.util.Objects;
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import net.minecraft.block.Block;
@@ -23,6 +24,7 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 import superhelo.icrutils.tileentity.TileEntityCeremonialColumn;
 
+@SuppressWarnings("deprecation")
 @ParametersAreNonnullByDefault
 public class CeremonialColumn extends BlockBase implements ITileEntityProvider {
 
@@ -38,6 +40,7 @@ public class CeremonialColumn extends BlockBase implements ITileEntityProvider {
         return new TileEntityCeremonialColumn();
     }
 
+    @Nonnull
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
         return AABB;
@@ -47,6 +50,7 @@ public class CeremonialColumn extends BlockBase implements ITileEntityProvider {
         return FULL_BLOCK_AABB;
     }
 
+    @Nonnull
     public BlockFaceShape getBlockFaceShape(IBlockAccess world, IBlockState state, BlockPos pos, EnumFacing facing) {
         return facing == EnumFacing.UP ? BlockFaceShape.SOLID : BlockFaceShape.UNDEFINED;
     }

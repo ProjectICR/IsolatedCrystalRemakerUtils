@@ -23,10 +23,18 @@ public class StageHandler {
 
     @Nullable
     public static String getStage(ItemStack stack) {
-        if (STAGE_HANDLER.containsKey(stack.getItem())) {
-            Pair<String, IItemStack> pair = STAGE_HANDLER.get(stack.getItem());
+        return getStage(stack, false);
+    }
 
-            if (pair.getValue().matches(CraftTweakerMC.getIItemStack(stack))) {
+    @Nullable
+    public static String getStage(ItemStack stack, boolean ignoreNBT) {
+        if (STAGE_HANDLER.containsKey(stack.getItem())) {
+            IItemStack matchStack = CraftTweakerMC.getIItemStack(stack);
+            Pair<String, IItemStack> pair = STAGE_HANDLER.get(stack.getItem());
+            IItemStack value = pair.getValue();
+            if (ignoreNBT && value.withTag(null, false).matches(matchStack)) {
+                return pair.getKey();
+            } else if (value.matches(matchStack)) {
                 return pair.getKey();
             }
         }

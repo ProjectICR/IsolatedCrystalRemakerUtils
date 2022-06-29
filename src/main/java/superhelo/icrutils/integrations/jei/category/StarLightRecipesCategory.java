@@ -1,7 +1,8 @@
-package superhelo.icrutils.integrations.jei;
+package superhelo.icrutils.integrations.jei.category;
 
 import java.util.List;
 import java.util.function.IntFunction;
+import javax.annotation.Nonnull;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IGuiFluidStackGroup;
@@ -9,7 +10,6 @@ import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.ingredients.VanillaTypes;
-import mezz.jei.api.recipe.IRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.item.ItemStack;
@@ -18,33 +18,28 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.translation.I18n;
 import org.apache.commons.lang3.mutable.MutableInt;
 import superhelo.icrutils.ICRUtils;
+import superhelo.icrutils.integrations.jei.wrapper.StarLightRecipesWrapper;
 
-public class StarLightRecipesCategory implements IRecipeCategory<StarLightRecipesWrapper> {
-
-    private final IDrawable background;
+public class StarLightRecipesCategory extends BaseRecipeCategory<StarLightRecipesWrapper> {
 
     public StarLightRecipesCategory(IGuiHelper guiHelper) {
         this.background = guiHelper.createBlankDrawable(172, 64);
     }
 
-    @Override
-    public String getUid() {
-        return ICRUtils.MODID + ".star_light_recipe";
-    }
-
-    @Override
-    public String getTitle() {
-        return I18n.translateToLocal("icrutils.starlight_fluid_transformation");
-    }
-
-    @Override
-    public String getModName() {
-        return ICRUtils.MODID;
-    }
-
+    @Nonnull
     @Override
     public IDrawable getBackground() {
         return background;
+    }
+
+    @Override
+    public String getRecipeUid() {
+        return "star_light_recipe";
+    }
+
+    @Override
+    public String getRecipeTitle() {
+        return "icrutils.starlight_fluid_transformation";
     }
 
     @Override
@@ -70,11 +65,14 @@ public class StarLightRecipesCategory implements IRecipeCategory<StarLightRecipe
         fluidStacks.init(index.intValue(), true, 80, 0);
         fluidStacks.set(index.intValue(), ingredients.getInputs(VanillaTypes.FLUID).get(0));
 
+        int seconds = recipeWrapper.getRecipe().getSeconds();
         itemStacks.addTooltipCallback((slotIndex, input, ingredient, tooltip) -> {
             if (slotIndex == 0) {
                 tooltip.add(I18n.translateToLocal("icrutils.jei.main_input"));
+                tooltip.add(this.addSecondsToToolTip(seconds));
             } else if (slotIndex == theFirstOutputIndex.intValue()) {
                 tooltip.add(I18n.translateToLocal("icrutils.jei.main_output"));
+                tooltip.add(this.addSecondsToToolTip(seconds));
             }
         });
 

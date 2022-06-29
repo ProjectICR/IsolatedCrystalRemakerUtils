@@ -9,5 +9,6 @@ public class BlockHandler {
     public static final List<Block> BLOCK_REGISTER = Lists.newArrayList();
 
     public static final Block CEREMONIAL_COLUMN = new CeremonialColumn();
+    public static final Block FUSION_TABLE = new FusionTable();
 
 }

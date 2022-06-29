@@ -7,12 +7,12 @@ import java.util.Set;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
+import superhelo.icrutils.ICRUtils;
 import superhelo.icrutils.capability.CapabilityHandler;
 import superhelo.icrutils.network.PacketHandler;
 import superhelo.icrutils.network.PacketStageSync;
 import superhelo.icrutils.network.PacketStageSync.Mode;
 
-@SuppressWarnings("unchecked")
 public class StageUtils {
 
     public static void addStageToPlayer(EntityPlayer player, String stage) {
@@ -28,17 +28,17 @@ public class StageUtils {
     }
 
     public static void clearStagesFromPlayer(EntityPlayer player) {
-        modifyStage(player, Collections.EMPTY_SET, Mode.CLEAR);
+        modifyStage(player, Collections.emptySet(), Mode.CLEAR);
     }
 
     public static Set<String> getStagesFromPlayer(EntityPlayer player) {
         return player.hasCapability(CapabilityHandler.STORE_STAGE_DATA, null) ?
-            Sets.newHashSet(player.getCapability(CapabilityHandler.STORE_STAGE_DATA, null).getStages().iterator()) : Collections.EMPTY_SET;
+            Sets.newHashSet(Objects.requireNonNull(player.getCapability(CapabilityHandler.STORE_STAGE_DATA, null)).getStages().iterator()) : Collections.emptySet();
     }
 
     public static boolean hasStage(EntityPlayer player, String stage) {
         if (Objects.nonNull(stage) && player.hasCapability(CapabilityHandler.STORE_STAGE_DATA, null)) {
-            return player.getCapability(CapabilityHandler.STORE_STAGE_DATA, null).hasStage(stage);
+            return Objects.requireNonNull(player.getCapability(CapabilityHandler.STORE_STAGE_DATA, null)).hasStage(stage);
         }
 
         return true;
@@ -48,8 +48,13 @@ public class StageUtils {
         return hasStage(player, StageHandler.getStage(stack));
     }
 
+    public static boolean hasStageIgnoreNBT(EntityPlayer player, ItemStack stack) {
+        return hasStage(player, StageHandler.getStage(stack, true));
+    }
+
     private static void modifyStage(EntityPlayer player, Set<String> stages, Mode mode) {
         if (stages.contains(null) || !player.hasCapability(CapabilityHandler.STORE_STAGE_DATA, null)) {
+            ICRUtils.LOGGER.error("Modify stages failed");
             return;
         }
 
